@@ -1,0 +1,96 @@
+1	Yoshi Masako	AisazuNihaIrarenai
+2	Kobayashi Yuki	AkkeraKanjinchou
+3	Arai Satoshi	Akuhamu
+4	Okuda Momoko	AosugiruHaru
+5	Kanno Hiroshi	AppareKappore, ParaisoRoad
+6	Yagami Ken	Arisa, HisokaReturns
+7	Kato Masaki	ARMS
+8	Ueda Miki	BakuretsuKungFuGirl
+9	Ishioka Shoei	Belmondo
+10	Hasegawa Yuichi	BEMADER_P
+11	Shinzawa Motoei	BokuHaSitatakaKun
+12	Sasaki Atsushi	BurariTessenTorimonocho
+13	Aida Mayumi	ByebyeC-BOY, MayaNoAkaiKutsu, OhWareraRettouSeitokai, TotteokiNoABC, TotteokiNoABC
+14	Omiya Naoi	Count3DeKimeteAgeru
+15	Deguchi Ryusei	DollGun
+16	Nakanuki Eri	Donburakokko
+17	Takeyama Yusuke	DualJustice
+18	Miyauchi Saya	EienNoWith
+19	Miyone Shi	EvaLady
+20	Kuniki Yuka	EverydayOsakanaChan
+21	Inohara Daisuke	GakuenNoise
+22	Nouda Tatsuki	GarakutayaManta
+23	Nakamura Chisato	GinNoChimera
+24	Kawakata Kaoru	GOOD_KISS_Ver2
+25	Minamoto Tarou	Hamlet, MukoukizuNoChonbo
+26	Ki Takashi	HanzaiKousyouninMinegishiEitarou
+27	Yamada Uduki	HaruichibanNoFukukoro, YukiNoFuruMachi, YukiNoFuruMachi
+28	Ito Shinpei	HarukaRefrain
+29	Sakurano Minene	HealingPlanet, HinagikuKenzan
+30	Yamada Koichi	HeiseiJimen
+31	Shinzawa Motoei	HighschoolKimengumi, BokuHaSitatakaKun
+32	Sakurano Minene	HinagikuKenzan
+33	Kimura Naomi	JangiriPonpon
+34	Nishikawa Shinji	JijiBabaFight
+35	Oi Masakazu	Joouari
+36	Shirai sanjirou	Jyovolley
+37	Takaguchi Satosumi	KarappoHighschool
+38	Toujo Kazumi	KimiHaBokuNoTaiyouDa
+39	Kuzuhara Ani	KoukouNoHitotachi
+40	Taira Masami	KuroidoGanka
+41	Takanami Shin	KyokugenCyclone
+42	Dynamic Tarou	LancelotFullThrottle
+43	Akamatsu Ken	LoveHina
+44	Masaki Hidehisa	MAD_STONE, PrayerHaNemurenai
+45	Iogi Juichi	MadouTaiga
+46	Shimada Hirokazu	MagicianLoad
+47	Minamisawa Hishika	MagicStarGakuin
+48	Konohana Akari	MariaSamaNihaNaisyo
+49	Umino Hotaru	MemorySeijin
+50	Takuji	MeteoSanStrikeDesu
+51	Shintani Akihiro	MiraiSan
+52	Nagano Noriko	MisutenaideDaisy
+53	Sato Tadashi	MoeruOnisan
+54	Tanabe Kiyomi	MomoyamaHaikagura
+55	Kazuna Kei	MutekiBoukenSyakuma
+56	Ebihurai	Nekodama
+57	Shindou Uni	NichijouSoup
+58	Omi Ayuko	Ningyoushi, SyabondamaKieta
+59	Sanri Youko	OL_Lunch
+60	Kuriki Shoko	PikaruGenkiDesu
+61	Takeya Shuji	PLANET7
+62	Shinohara Masami	PlatinumJungle
+63	Kurosawa Tetsuya	PrayerHaNemurenai
+64	Asatsuki Mai	PrismHeart
+65	Mizukami Satoshi	PsychoStaff
+66	Satonaka Machiko	Raphael
+67	Yama Miyuki	ReveryEarth
+68	Ide Chikae	RinToSiteSippuNoNaka
+69	Hikochi Sakuya	RisingGirl
+70	Matsuda Naomasa	Saisoku
+71	Inokuma Shinobu	SaladDays
+72	Karikawa Seyu	SamayoeruSyonenNiJunaiWo
+73	Shimazaki Yuzuru	SeisinkiVulnus
+74	Yoshimori Mikio	ShimatteIkouze
+75	Tashiro Kimu	SonokiDeABC
+76	Ayumi Yui	TaiyouNiSmash
+77	Hukuyama Kei	TapkunNoTanteisitsu
+78	Tanaka Masato	TasogareTsushin
+79	Matumori Nawoya	TennenSenshiG
+80	Kiriga Yuki	TensiNoHaneToAkumaNoShippo
+81	Kawaguchi Kengo	TetsuSan
+82	Ono Yasuyuki	That'sIzumiko, YumeNoKayoiji
+83	Kurosawa Tetsuya, Masaki Hidehisa	PrayerHaNemurenai
+84	Saijo Shinji	ToutaMairimasu
+85	Tojo Miho	TouyouKidan
+86	Sato Harumi	TsubasaNoKioku
+87	Gasan	UchiNoNyan'sDiary
+88	Yabuno Tenya, Watanabe Tatsuya	UltraEleven
+89	Uchida Minako	UnbalanceTokyo
+90	Nakayama Noriko	WarewareHaOniDearu
+91	Saki Kaori	YamatoNoHane
+92	Hanada Sakumi	YasasiiAkuma
+93	Tenya	YouchienBoueigumi
+94	Shimazaki Yuzuru, Taka Tsukasa	YoumaKourin
+95	Kurita Riku	YumeiroCooking
+96	Hori Nobuyuki	UchuKigekiM774

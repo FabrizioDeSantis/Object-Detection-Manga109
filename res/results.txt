@@ -1,0 +1,29 @@
+{
+    "model": ["fasterrcnn resnet", "fasterrcnn resnetv2", "fasterrcnn mobilenet", "retinanet"],
+    "mAP": [0.5790, 0.6093, 0.4868, 0.4985],
+    "mAP_50": [0.8431, 0.8612, 0.7406, 0.7136],
+    "mAP_75": [0.62, 0.6474, 0.5034, 0.5318]
+}
+{
+    "learning rate": ["0.001", "0.003", "0.005"],
+    "mAP": [0.5792, 0.5737, 0.5785],
+    "mAP_50": [0.8444, 0.8345, 0.8424],
+    "mAP_75": [0.6182, 0.6131, 0.6219]
+}
+{
+    "optimizer": ["SGD", "Adam"],
+    "mAP": [0.6093, 0.5885],
+    "mAP_50": [0.8612, 0.8460],
+    "mAP_75": [0.6474, 0.6220]
+}
+{
+    "fasterrcnn": ["pretrained (no authors)", "pretrained (authors)", "untrained (no authors)", "untrained (authors)"],
+    "mAP": [0.6112, 0.5949, 0.5265, 0.5043],
+    "mAP_50": [0.8631, 0.8594, 0.8053, 0.7872],
+    "mAP_75": [0.6501, 0.6445, 0.5437, 0.5263]
+}
+{
+    "classes": ["body", "face", "frame", "text"],
+    "mAP": [0.5313, 0.4198, 0.8442, 0.5997],
+    "mAP (single)": [0.6090, 0.4533, 0.9040, 0.6201]
+}
