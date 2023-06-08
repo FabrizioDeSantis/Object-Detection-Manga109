@@ -182,7 +182,7 @@ class Solver(object):
         progress_bar.set_description(desc=f"Loss: {loss_value:.4f}, Loss classifier: {loss_classifier:.4f}")
 
       val_loss=self.validate_with_author(epoch)
-      avg_val_losses.append(val_loss)
+      avg_val_losses.append(np.average(val_loss))
 
       print(f"Epoch #{epoch+1} train loss: {sum(train_losses)//len(self.train_loader):.3f}")   
       print(f"Epoch #{epoch+1} validation loss: {sum(val_loss)//len(self.val_loader):.3f}")  

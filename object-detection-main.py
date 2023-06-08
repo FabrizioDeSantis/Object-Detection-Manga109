@@ -42,6 +42,7 @@ def get_args():
 
   argParser.add_argument("-det_thresh", "--detection_threshold", type = float, nargs = '?', const = 1, default = 0.50, help = "Detection threshold for the metric computation. Default is: 0.50")
 
+  argParser.add_argument("-map_authors", "--map_authors", type = int, nargs = '?', const = 1, default = 1, help = "Calculate mAP for author classification (available only if the author classification is enabled).")
   # classes customization
 
   argParser.add_argument("-body", "--body", type = int, nargs = '?', const = 1, default = 1, help = "1 if you want to train the model to recognize 'body' class, 0 otherwise.")
@@ -277,7 +278,7 @@ def main(args):
     """
     if args.add_authors:
       solver.train_with_authors()
-      calculate_mAP_authors(model=solver.model, classes=CLASSES, authors=AUTHORS, device=solver.device, val_loader=solver.val_loader)
+      calculate_mAP_authors(model=solver.model, classes=CLASSES, authors=AUTHORS, device=solver.device, val_loader=solver.val_loader, args = args)
     else:
       solver.train()
       calculate_mAP(model=solver.model, classes=CLASSES, device=solver.device, val_loader=solver.val_loader, args=args)

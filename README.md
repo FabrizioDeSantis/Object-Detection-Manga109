@@ -57,6 +57,7 @@ The purpose of this deep learning project is to conduct an object detection task
 | box_bg_th             | Maximum IoU between the proposal and the GT box so that they can be considered as negative during the classification head training |
 | box_score_th          | During inference, only return proposals with a classification score greater than box_score_th                                      |
 | box_detections        | Maximum number of detections per image, for all classes                                                                            |
+| map_authors           | Calculate mAP for author classification (available only if the author classification is enabled)                                   |
 
 ### Prerequisites
 
