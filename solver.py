@@ -101,10 +101,11 @@ class Solver(object):
         progress_bar.set_description(desc=f"Loss: {loss_value:.4f}")
       # return the validation loss
       val_loss=self.validate(epoch)
-      avg_val_losses.append(np.average(val_loss))
+      val_loss = np.average(val_loss)
+      avg_val_losses.append(val_loss)
 
       print(f"Epoch #{epoch+1} train loss: {np.average(train_losses):.3f}")   
-      print(f"Epoch #{epoch+1} validation loss: {np.average(val_loss):.3f}")   
+      print(f"Epoch #{epoch+1} validation loss: {val_loss:.3f}")   
       # early stopping
       if self.args.early_stopping:
         # check if the minimum number of training epochs is reached before enabling early stopping
@@ -113,11 +114,14 @@ class Solver(object):
             # if early stopping is triggered, exit from training
             break
           else:
-            self.save_model()
+            if val_loss == min(avg_val_losses):
+              self.save_model()
         else:
-          self.save_model()
+          if val_loss == min(avg_val_losses):
+            self.save_model()
       else:
-        self.save_model()
+        if val_loss == min(avg_val_losses):
+            self.save_model()
 
     self.writer.flush()
     self.writer.close()
@@ -170,6 +174,8 @@ class Solver(object):
     for epoch in range(0, self.epochs):
 
       train_losses = []
+      classifier_losses = []
+      author_losses = []
 
       progress_bar = tqdm(self.train_loader, total=len(self.train_loader))
 
@@ -184,7 +190,9 @@ class Solver(object):
         loss_dict = self.model(images, targets) # return the loss
 
         loss_classifier = loss_dict["loss_classifier"]
+        classifier_losses.append(loss_classifier)
         author_loss = loss_dict["loss_authors"]
+        author_losses.append(author_loss)
 
         losses = sum(loss for loss in loss_dict.values())
         loss_value = losses.item()
@@ -194,27 +202,32 @@ class Solver(object):
 
         if i % self.args.print_every == (self.args.print_every-1):
           self.writer.add_scalar("epoch_avg_train_loss", np.average(train_losses), epoch*len(self.train_loader) + i)
-          self.writer.add_scalar("epoch_avg_author_train_loss", author_loss, epoch*len(self.train_loader) + i)
-          self.writer.add_scalar("epoch_avg_classifier_train_loss", loss_classifier, epoch*len(self.val_loader) + i)
+          self.writer.add_scalar("epoch_avg_author_train_loss", np.average(author_losses), epoch*len(self.train_loader) + i)
+          self.writer.add_scalar("epoch_avg_classifier_train_loss", np.average(classifier_losses), epoch*len(self.val_loader) + i)
 
         progress_bar.set_description(desc=f"Loss: {loss_value:.4f}, Loss classifier: {loss_classifier:.4f}")
 
       val_loss=self.validate_with_author(epoch)
-      avg_val_losses.append(np.average(val_loss))
+      val_loss = (np.average(val_loss))
 
       print(f"Epoch #{epoch+1} train loss: {np.average(train_losses):.3f}")   
-      print(f"Epoch #{epoch+1} validation loss: {np.average(val_loss):.3f}")  
+      print(f"Epoch #{epoch+1} validation loss: {val_loss:.3f}")  
 
       if self.args.early_stopping:
+        # check if the minimum number of training epochs is reached before enabling early stopping
         if epoch > self.args.num_min_epochs:
           if early_stopping(avg_val_losses, self.args.early_stopping):
+            # if early stopping is triggered, exit from training
             break
           else:
-            self.save_model()
+            if val_loss == min(avg_val_losses):
+              self.save_model()
         else:
-          self.save_model()
+          if val_loss == min(avg_val_losses):
+            self.save_model()
       else:
-        self.save_model()
+        if val_loss == min(avg_val_losses):
+            self.save_model()
 
     self.writer.flush()
     self.writer.close()
@@ -222,6 +235,8 @@ class Solver(object):
 
   def validate_with_author(self, epoch):
     val_losses = []
+    author_losses = []
+    classifier_losses = []
     progress_bar = tqdm(self.val_loader, total=len(self.val_loader))
     for i, data in enumerate(progress_bar):
       images, targets = data
@@ -231,14 +246,16 @@ class Solver(object):
           loss_dict = self.model(images, targets)
       losses = sum(loss for loss in loss_dict.values())
       loss_classifier = loss_dict["loss_classifier"]
+      classifier_losses.append(loss_classifier)
       author_loss = loss_dict["loss_authors"]
+      author_losses.append(author_loss)
       loss_value = losses.item()
       val_losses.append(loss_value)
 
       if i % self.args.print_every == (self.args.print_every-1):
         self.writer.add_scalar("epoch_avg_val_loss", np.average(val_losses), epoch*len(self.val_loader) + i)
-        self.writer.add_scalar("epoch_avg_author_val_loss", author_loss, epoch*len(self.val_loader) + i)
-        self.writer.add_scalar("epoch_avg_classifier_val_loss", loss_classifier, epoch*len(self.val_loader) + i)
+        self.writer.add_scalar("epoch_avg_author_val_loss", np.average(author_losses), epoch*len(self.val_loader) + i)
+        self.writer.add_scalar("epoch_avg_classifier_val_loss", np.average(classifier_losses), epoch*len(self.val_loader) + i)
 
       progress_bar.set_description(desc=f"Loss: {loss_value:.4f}, Loss classifier: {loss_classifier:.4f}, Loss author: {author_loss:.4f}")
 

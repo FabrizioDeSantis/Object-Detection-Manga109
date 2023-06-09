@@ -29,68 +29,65 @@
 29	Sakurano Minene	HealingPlanet, HinagikuKenzan
 30	Yamada Koichi	HeiseiJimen
 31	Shinzawa Motoei	HighschoolKimengumi, BokuHaSitatakaKun
-32	Sakurano Minene	HinagikuKenzan
-33	Kimura Naomi	JangiriPonpon
-34	Nishikawa Shinji	JijiBabaFight
-35	Oi Masakazu	Joouari
-36	Shirai sanjirou	Jyovolley
-37	Takaguchi Satosumi	KarappoHighschool
-38	Toujo Kazumi	KimiHaBokuNoTaiyouDa
-39	Kuzuhara Ani	KoukouNoHitotachi
-40	Taira Masami	KuroidoGanka
-41	Takanami Shin	KyokugenCyclone
-42	Dynamic Tarou	LancelotFullThrottle
-43	Akamatsu Ken	LoveHina
-44	Masaki Hidehisa	MAD_STONE, PrayerHaNemurenai
-45	Iogi Juichi	MadouTaiga
-46	Shimada Hirokazu	MagicianLoad
-47	Minamisawa Hishika	MagicStarGakuin
-48	Konohana Akari	MariaSamaNihaNaisyo
-49	Umino Hotaru	MemorySeijin
-50	Takuji	MeteoSanStrikeDesu
-51	Shintani Akihiro	MiraiSan
-52	Nagano Noriko	MisutenaideDaisy
-53	Sato Tadashi	MoeruOnisan
-54	Tanabe Kiyomi	MomoyamaHaikagura
-55	Kazuna Kei	MutekiBoukenSyakuma
-56	Ebihurai	Nekodama
-57	Shindou Uni	NichijouSoup
-58	Omi Ayuko	Ningyoushi, SyabondamaKieta
-59	Sanri Youko	OL_Lunch
-60	Kuriki Shoko	PikaruGenkiDesu
-61	Takeya Shuji	PLANET7
-62	Shinohara Masami	PlatinumJungle
-63	Kurosawa Tetsuya	PrayerHaNemurenai
-64	Asatsuki Mai	PrismHeart
-65	Mizukami Satoshi	PsychoStaff
-66	Satonaka Machiko	Raphael
-67	Yama Miyuki	ReveryEarth
-68	Ide Chikae	RinToSiteSippuNoNaka
-69	Hikochi Sakuya	RisingGirl
-70	Matsuda Naomasa	Saisoku
-71	Inokuma Shinobu	SaladDays
-72	Karikawa Seyu	SamayoeruSyonenNiJunaiWo
-73	Shimazaki Yuzuru	SeisinkiVulnus
-74	Yoshimori Mikio	ShimatteIkouze
-75	Tashiro Kimu	SonokiDeABC
-76	Ayumi Yui	TaiyouNiSmash
-77	Hukuyama Kei	TapkunNoTanteisitsu
-78	Tanaka Masato	TasogareTsushin
-79	Matumori Nawoya	TennenSenshiG
-80	Kiriga Yuki	TensiNoHaneToAkumaNoShippo
-81	Kawaguchi Kengo	TetsuSan
-82	Ono Yasuyuki	That'sIzumiko, YumeNoKayoiji
-83	Kurosawa Tetsuya, Masaki Hidehisa	PrayerHaNemurenai
-84	Saijo Shinji	ToutaMairimasu
-85	Tojo Miho	TouyouKidan
-86	Sato Harumi	TsubasaNoKioku
-87	Gasan	UchiNoNyan'sDiary
-88	Yabuno Tenya, Watanabe Tatsuya	UltraEleven
-89	Uchida Minako	UnbalanceTokyo
-90	Nakayama Noriko	WarewareHaOniDearu
-91	Saki Kaori	YamatoNoHane
-92	Hanada Sakumi	YasasiiAkuma
-93	Tenya	YouchienBoueigumi
-94	Shimazaki Yuzuru, Taka Tsukasa	YoumaKourin
-95	Kurita Riku	YumeiroCooking
-96	Hori Nobuyuki	UchuKigekiM774
+32	Kimura Naomi	JangiriPonpon
+33	Nishikawa Shinji	JijiBabaFight
+34	Oi Masakazu	Joouari
+35	Shirai sanjirou	Jyovolley
+36	Takaguchi Satosumi	KarappoHighschool
+37	Toujo Kazumi	KimiHaBokuNoTaiyouDa
+38	Kuzuhara Ani	KoukouNoHitotachi
+39	Taira Masami	KuroidoGanka
+40	Takanami Shin	KyokugenCyclone
+41	Dynamic Tarou	LancelotFullThrottle
+42	Akamatsu Ken	LoveHina
+43	Masaki Hidehisa	MAD_STONE, PrayerHaNemurenai
+44	Iogi Juichi	MadouTaiga
+45	Shimada Hirokazu	MagicianLoad
+46	Minamisawa Hishika	MagicStarGakuin
+47	Konohana Akari	MariaSamaNihaNaisyo
+48	Umino Hotaru	MemorySeijin
+49	Takuji	MeteoSanStrikeDesu
+50	Shintani Akihiro	MiraiSan
+51	Nagano Noriko	MisutenaideDaisy
+52	Sato Tadashi	MoeruOnisan
+53	Tanabe Kiyomi	MomoyamaHaikagura
+54	Kazuna Kei	MutekiBoukenSyakuma
+55	Ebihurai	Nekodama
+56	Shindou Uni	NichijouSoup
+57	Omi Ayuko	Ningyoushi, SyabondamaKieta
+58	Sanri Youko	OL_Lunch
+59	Kuriki Shoko	PikaruGenkiDesu
+60	Takeya Shuji	PLANET7
+61	Shinohara Masami	PlatinumJungle
+62	Asatsuki Mai	PrismHeart
+63	Mizukami Satoshi	PsychoStaff
+64	Satonaka Machiko	Raphael
+65	Yama Miyuki	ReveryEarth
+66	Ide Chikae	RinToSiteSippuNoNaka
+67	Hikochi Sakuya	RisingGirl
+68	Matsuda Naomasa	Saisoku
+69	Inokuma Shinobu	SaladDays
+70	Karikawa Seyu	SamayoeruSyonenNiJunaiWo
+71	Shimazaki Yuzuru	SeisinkiVulnus
+72	Yoshimori Mikio	ShimatteIkouze
+73	Tashiro Kimu	SonokiDeABC
+74	Ayumi Yui	TaiyouNiSmash
+75	Hukuyama Kei	TapkunNoTanteisitsu
+76	Tanaka Masato	TasogareTsushin
+77	Matumori Nawoya	TennenSenshiG
+78	Kiriga Yuki	TensiNoHaneToAkumaNoShippo
+79	Kawaguchi Kengo	TetsuSan
+80	Ono Yasuyuki	That'sIzumiko, YumeNoKayoiji
+81	Saijo Shinji	ToutaMairimasu
+82	Tojo Miho	TouyouKidan
+83	Sato Harumi	TsubasaNoKioku
+84	Gasan	UchiNoNyan'sDiary
+85	Yabuno Tenya, Watanabe Tatsuya	UltraEleven
+86	Uchida Minako	UnbalanceTokyo
+87	Nakayama Noriko	WarewareHaOniDearu
+88	Saki Kaori	YamatoNoHane
+89	Hanada Sakumi	YasasiiAkuma
+90	Tenya	YouchienBoueigumi
+91	Shimazaki Yuzuru, Taka Tsukasa	YoumaKourin
+92	Kurita Riku	YumeiroCooking
+93	Hori Nobuyuki	UchuKigekiM774

@@ -1,7 +1,6 @@
 import manga109api_custom
 import torch
 import pandas as pd
-import numpy as np
 from sklearn.model_selection import train_test_split
 from torch.utils.tensorboard import SummaryWriter
 from solver import Solver
@@ -40,7 +39,8 @@ def get_args():
   argParser.add_argument("-dataset", "--dataset_dir", type = str, nargs = '?', const = 1, default = "Manga109/Manga109_released_2021_12_30", help = "Directory path of dataset")
   argParser.add_argument("-inference_path", "--inference_path", type = str, nargs = '?', const = 1, default = "./inference_images", help = "Path where the images for inference are saved.")
   argParser.add_argument("-dataset_transform", "--dataset_transform", type = str, nargs = '?', const = 1, default = 0, help = "1 if you want to use transformations, 0 otherwise.")
-  
+  argParser.add_argument("-map_author", "--map_author", type = int, nargs = '?', const = 1, default = 0, help = "1 if you want to calculate mAP for authors, 0 otherwise. Default is 0 (only available when author classification is enabled).")
+
   argParser.add_argument("-det_thresh", "--detection_threshold", type = float, nargs = '?', const = 1, default = 0.50, help = "Detection threshold for the metric computation. Default is: 0.50")
   argParser.add_argument("-split", "--split", type = float, nargs = '?', const = 1, default = 0.20, help = "The value used to split the dataset into train and validation subsets. Default is: 0.20 (80% training and 20% validation).")
   argParser.add_argument("-map_authors", "--map_authors", type = int, nargs = '?', const = 1, default = 1, help = "Calculate mAP for author classification (available only if the author classification is enabled).")
@@ -149,6 +149,8 @@ def check_args_integrity(args):
     args.add_authors = 0
   if args.model != "fasterrcnn":
     args.backbone = "-"
+  if args.add_authors == 0 and args.map_authors == 1:
+    args.map_authors = 0
 
 def main(args):
 
@@ -278,8 +280,6 @@ def main(args):
     solver
     """
     solver = Solver(train_data_loader=train_loader, val_data_loader=val_loader, device=DEVICE, writer=writer, args=args, n_classes=NUM_CLASSES, n_authors=NUM_AUTHORS)
-    
-    
     if args.mode == 1:
       # load a checkpoint
       solver.load_model(DEVICE)
@@ -288,9 +288,11 @@ def main(args):
     """
     if args.add_authors:
       solver.train_with_authors()
-      calculate_mAP_authors(model=solver.model, classes=CLASSES, authors=AUTHORS, device=solver.device, val_loader=solver.val_loader, args = args)
     else:
       solver.train()
+    if args.map_authors:
+      calculate_mAP_authors(model=solver.model, classes=CLASSES, authors=AUTHORS, device=solver.device, val_loader=solver.val_loader, args = args)
+    else:
       calculate_mAP(model=solver.model, classes=CLASSES, device=solver.device, val_loader=solver.val_loader, args=args)
 
 if __name__=="__main__":

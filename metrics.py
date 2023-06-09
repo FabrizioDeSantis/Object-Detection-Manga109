@@ -170,9 +170,6 @@ def calculate_mAP_authors(model, classes, authors, device, val_loader, args):
                     boxes = boxes[scores >= detection_threshold].astype(np.int32)
                     
                     # get all predicted classes
-                    #predicted_classes = [classes[i] for i in out["labels"].cpu().numpy()]                    
-                    #actual_classes = [classes[i] for i in targ["labels"].cpu().numpy()]
-                    #actual_authors = [authors[i] for i in targ["author"].cpu().numpy()]
 
                     actual_classes = targ["labels"].data.numpy()
                     actual_authors = targ["author"].data.numpy()
@@ -214,6 +211,7 @@ def calculate_mAP_authors(model, classes, authors, device, val_loader, args):
                         bounding_boxes_targ.append(bs)
                         labels_target.append(actual_classes[i])
                         authors_target.append(actual_authors[i])
+
                 # create dictionaries for current image
                 predicted_metrics_dictionary = dict(boxes = torch.tensor(bounding_boxes_pred),
                             scores = torch.tensor(scrs),

@@ -1,4 +1,4 @@
-# FasterRCNN-Manga109-Object-Detection
+# FasterRCNN Manga109 Object-Detection
 The purpose of this deep learning project is to conduct an object detection task using models like FasterRCNN. The models were trained on the Manga109 dataset, a dataset compiled by the Aizawa Yamasaki Matsui Laboratory, University of Tokyo. Manga109 is composed of 109 manga volumes drawn by professional mangaka in Japan. The project consists of the following Python modules:
 
 - `object-detection-main.py`: This module is responsible for launching the simulation.
@@ -72,7 +72,6 @@ The purpose of this deep learning project is to conduct an object detection task
   - [torchvision](https://pytorch.org/vision/stable/index.html)
   - [cv2](https://docs.opencv.org/4.5.2/)
   - [PIL](https://pillow.readthedocs.io/en/stable/)
-  - [math](https://docs.python.org/3/library/math.html)
   - [random](https://docs.python.org/3/library/random.html)
   - [argparse](https://docs.python.org/3/library/argparse.html)
   - [torch.utils.tensorboard](https://pytorch.org/docs/stable/tensorboard.html)
