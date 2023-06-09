@@ -869,6 +869,21 @@ RESNET - LR = 0.005 - ALL CLASSES - map@0.50:0.05:0.95
  'mar_medium': tensor(0.7276),
  'mar_small': tensor(0.3278)}
 
+{'map': tensor(0.6197),
+ 'map_50': tensor(0.8635),
+ 'map_75': tensor(0.6678),
+ 'map_large': tensor(0.6296),
+ 'map_medium': tensor(0.6496),
+ 'map_per_class': tensor([0.5699, 0.3858, 0.8999, 0.6231]),
+ 'map_small': tensor(0.2939),
+ 'mar_1': tensor(0.0266),
+ 'mar_10': tensor(0.2453),
+ 'mar_100': tensor(0.6701),
+ 'mar_100_per_class': tensor([0.6342, 0.4511, 0.9250, 0.6699]),
+ 'mar_large': tensor(0.7126),
+ 'mar_medium': tensor(0.7407),
+ 'mar_small': tensor(0.3459)}
+
 -- mAP autori
 
 {'map': tensor(0.0327),
@@ -1106,7 +1121,20 @@ RESNET - LR = 0.005 - ALL CLASSES - map@0.50:0.05:0.95
 
 -- threshold 0.80
 
-
+{'map': tensor(0.5650),
+ 'map_50': tensor(0.8308),
+ 'map_75': tensor(0.6002),
+ 'map_large': tensor(0.5532),
+ 'map_medium': tensor(0.6088),
+ 'map_per_class': tensor([0.4964, 0.3285, 0.8496, 0.5854]),
+ 'map_small': tensor(0.2499),
+ 'mar_1': tensor(0.0611),
+ 'mar_10': tensor(0.4832),
+ 'mar_100': tensor(0.6206),
+ 'mar_100_per_class': tensor([0.5697, 0.3920, 0.8839, 0.6365]),
+ 'mar_large': tensor(0.6641),
+ 'mar_medium': tensor(0.6828),
+ 'mar_small': tensor(0.3060)}
 
 -- UNTRAINED RESNET50V2
 

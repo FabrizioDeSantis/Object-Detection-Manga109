@@ -10,7 +10,7 @@ from utils import load_all_images
 from datasetManga109 import CustomDataset, get_train_transform, get_valid_transform, get_train_transform_aug
 from metrics import calculate_mAP, calculate_mAP_authors
 import os
-from inference import get_prediction
+from inference import get_prediction, load_inference_model
 
 import argparse
 
@@ -109,7 +109,7 @@ def check_args_integrity(args):
     print("Error. The optimizer must be SGD or Adam")
     os._exit(1)
   if args.model != "fasterrcnn" and args.model != "retinanet" and args.model != "ssd":
-    print("Error. The model name must be fasterrcnn or retinanet")
+    print("Error. The model name must be fasterrcnn, retinanet or ssd")
     os._exit(1)
   if args.backbone != "resnet50" and args.backbone != "resnet50v2" and args.backbone != "mobilenet":
     print("Error. Backbone name must be resnet50, resnet50v2 or mobilenet")
@@ -175,109 +175,111 @@ def main(args):
 
   NUM_CLASSES=len(CLASSES)
 
-  print("---- TRAINING PARAMETERS ----")
-  print("Batch size: " + str(BATCH_SIZE))
-  print("Resize: " + str(RESIZE_TO))
-  print("Model: " + args.model)
-  print("Backbone: " + args.backbone)
-  print("Pretrained: " + ("Yes" if args.pretrained else "No"))
-  print("Optimizer: " + str(args.optimizer))
-  print("Learning rate: " + str(LEARNING_RATE))
-  print("Epochs: " + str(NUM_EPOCHS))
-  print("Authors: " + ("Included" if args.add_authors else "Not included"))
-  print("Classes: " + str(NUM_CLASSES))
-  print("-----------------------------")
-
-  '''
-  Reading the authors from a dedicated file with ID, NAME and BOOK TITLE
-  Information about the authors is also used for the division of the dataset
-  '''
-
-  file_path = "autori.txt"
-  data = pd.read_csv(file_path, sep="\t", header=None)
-  data.columns = ["id", "author", "title"]
-  ids = data["id"].tolist()
-  authors = data["author"].tolist()
-  titles = data["title"].tolist()
-
-  AUTHORS = authors.copy()
-  AUTHORS.insert(0, "background")
-  NUM_AUTHORS = len(AUTHORS)
-
-  authors_list = []
-
-  # Preparing a list of authors to be given as input to the parser
-
-  for id, author, title in zip(ids, authors, titles):
-    temp = []
-    temp.append(id)
-    temp.append(author)
-    temp.append(title)
-    authors_list.append(temp)
-
-  manga109_root_dir = args.dataset_dir
-  
-  # Custom parser from manga109api_custom
-  p = manga109api_custom.Parser(root_dir=manga109_root_dir, authors_list=authors_list)
-
-  images=[]
-  authors_labels = []
-  images, authors_labels = load_all_images(p, CLASSES)
-
-  '''
-  Dataset split in training and test.
-  Author labels are used to divide the dataset in order to have a dataset split that takes into account the author.
-  '''
-  train_images, val_images, _ , _ = train_test_split(images, authors_labels, shuffle=True, stratify=authors_labels, test_size=args.split, random_state=args.seed)
-
-  # convert list in Pandas DataFrame
-  df_train = pd.DataFrame(train_images, columns=["path", "annotation"])
-  df_val = pd.DataFrame(val_images, columns=["path", "annotation"])
-
-  if args.dataset_transform:
-    train_dataset = CustomDataset(df_train, RESIZE_TO, RESIZE_TO, CLASSES, get_train_transform_aug())
-  else:
-    train_dataset = CustomDataset(df_train, RESIZE_TO, RESIZE_TO, CLASSES, get_train_transform())
-  val_dataset = CustomDataset(df_val, RESIZE_TO, RESIZE_TO, CLASSES, get_valid_transform())
-
-  def collate_fn(batch):
-      """
-      To handle the data loading as different images may have different number 
-      of objects and to handle varying size tensors as well.
-      """
-      return tuple(zip(*batch)) 
-
-  print(f"Number of training images: {len(train_dataset)}")
-  print(f"Number of validation images: {len(val_dataset)}")
-
-  train_loader = DataLoader(
-      train_dataset,
-      batch_size=BATCH_SIZE,
-      shuffle=True,
-      num_workers=NUM_WORKERS,
-      collate_fn=collate_fn
-  )
-
-  val_loader = DataLoader(
-      val_dataset,
-      batch_size=BATCH_SIZE,
-      shuffle=True,
-      num_workers=NUM_WORKERS,
-      collate_fn=collate_fn
-  )
-
-  writer = SummaryWriter('./runs/faster-rcnn-experiment')
-
-  """
-  solver
-  """
-  solver = Solver(train_data_loader=train_loader, val_data_loader=val_loader, device=DEVICE, writer=writer, args=args, n_classes=NUM_CLASSES, n_authors=NUM_AUTHORS)
-  solver.load_model(DEVICE)
   if args.mode == 2:
     # inference mode
-    solver.load_model(DEVICE)
-    get_prediction(inference_model = solver.model, classes = CLASSES, authors = AUTHORS, args = args)
+    inference_model = load_inference_model(args.file_name)
+    get_prediction(inference_model = inference_model, classes = CLASSES, args = args)
   else:
+
+    print("---- TRAINING PARAMETERS ----")
+    print("Batch size: " + str(BATCH_SIZE))
+    print("Resize: " + str(RESIZE_TO))
+    print("Model: " + args.model)
+    print("Backbone: " + args.backbone)
+    print("Pretrained: " + ("Yes" if args.pretrained else "No"))
+    print("Optimizer: " + str(args.optimizer))
+    print("Learning rate: " + str(LEARNING_RATE))
+    print("Epochs: " + str(NUM_EPOCHS))
+    print("Authors: " + ("Included" if args.add_authors else "Not included"))
+    print("Classes: " + str(NUM_CLASSES))
+    print("-----------------------------")
+
+    '''
+    Reading the authors from a dedicated file with ID, NAME and BOOK TITLE
+    Information about the authors is also used for the division of the dataset
+    '''
+
+    file_path = "autori.txt"
+    data = pd.read_csv(file_path, sep="\t", header=None)
+    data.columns = ["id", "author", "title"]
+    ids = data["id"].tolist()
+    authors = data["author"].tolist()
+    titles = data["title"].tolist()
+
+    AUTHORS = authors.copy()
+    AUTHORS.insert(0, "background")
+    NUM_AUTHORS = len(AUTHORS)
+
+    authors_list = []
+
+    # Preparing a list of authors to be given as input to the parser
+
+    for id, author, title in zip(ids, authors, titles):
+      temp = []
+      temp.append(id)
+      temp.append(author)
+      temp.append(title)
+      authors_list.append(temp)
+
+    manga109_root_dir = args.dataset_dir
+    
+    # Custom parser from manga109api_custom
+    p = manga109api_custom.Parser(root_dir=manga109_root_dir, authors_list=authors_list)
+
+    images=[]
+    authors_labels = []
+    images, authors_labels = load_all_images(p, CLASSES)
+
+    '''
+    Dataset split in training and test.
+    Author labels are used to divide the dataset in order to have a dataset split that takes into account the author.
+    '''
+    train_images, val_images, _ , _ = train_test_split(images, authors_labels, shuffle=True, stratify=authors_labels, test_size=args.split, random_state=args.seed)
+
+    # convert list in Pandas DataFrame
+    df_train = pd.DataFrame(train_images, columns=["path", "annotation"])
+    df_val = pd.DataFrame(val_images, columns=["path", "annotation"])
+
+    if args.dataset_transform:
+      train_dataset = CustomDataset(df_train, RESIZE_TO, RESIZE_TO, CLASSES, get_train_transform_aug())
+    else:
+      train_dataset = CustomDataset(df_train, RESIZE_TO, RESIZE_TO, CLASSES, get_train_transform())
+    val_dataset = CustomDataset(df_val, RESIZE_TO, RESIZE_TO, CLASSES, get_valid_transform())
+
+    def collate_fn(batch):
+        """
+        To handle the data loading as different images may have different number 
+        of objects and to handle varying size tensors as well.
+        """
+        return tuple(zip(*batch)) 
+
+    print(f"Number of training images: {len(train_dataset)}")
+    print(f"Number of validation images: {len(val_dataset)}")
+
+    train_loader = DataLoader(
+        train_dataset,
+        batch_size=BATCH_SIZE,
+        shuffle=True,
+        num_workers=NUM_WORKERS,
+        collate_fn=collate_fn
+    )
+
+    val_loader = DataLoader(
+        val_dataset,
+        batch_size=BATCH_SIZE,
+        shuffle=True,
+        num_workers=NUM_WORKERS,
+        collate_fn=collate_fn
+    )
+
+    writer = SummaryWriter('./runs/faster-rcnn-experiment')
+
+    """
+    solver
+    """
+    solver = Solver(train_data_loader=train_loader, val_data_loader=val_loader, device=DEVICE, writer=writer, args=args, n_classes=NUM_CLASSES, n_authors=NUM_AUTHORS)
+    
+    
     if args.mode == 1:
       # load a checkpoint
       solver.load_model(DEVICE)

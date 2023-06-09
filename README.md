@@ -86,3 +86,9 @@ Example of script launch:
 ```shell
 python object-detection-main.py -model=fasterrcnn -bb=resnet50v2 -min_ep=0 -early_stopping=1 -num_epochs=10 -lr=0.0001 -opt=SGD -add_auth=1 -bs=4 -res=512 -size32=0 -size64=0 -ar05=0 -ar2=0 -frame=0
 ```
+
+Example of inference:
+
+```shell
+python object-detection-main.py -mode=2 --file_name="model.pt" -det_thresh=0.50
+```

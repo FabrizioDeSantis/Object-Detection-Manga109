@@ -23,6 +23,10 @@ def load_image_tensor(image_paths, device):
     input_images.append(image_tensor.to(device))
   return input_images
 
+def load_inference_model(model_path):
+  model = torch.load(model_path)
+  return model
+
 def get_results(detector, images):
   with torch.no_grad():
     outputs = detector(images)
@@ -40,13 +44,13 @@ def load_images(inference_path):
   paths = []
   for root, _, files in os.walk(inference_path):
     for file in files:
-      estensione = os.path.splitext(file)[1].lower()
-      if estensione in types:
+      ext = os.path.splitext(file)[1].lower()
+      if ext in types:
         img_path = os.path.join(root, file)
         paths.append(img_path)
   return paths
   
-def get_prediction(inference_model, classes, authors, args):
+def get_prediction(inference_model, classes, args):
   """
   Function used to make predictions on images that do not belong to the original dataset.
   Images with predicted bounding boxes are saved in the same folder as the images used for inference.
@@ -66,9 +70,6 @@ def get_prediction(inference_model, classes, authors, args):
   NUM_CLASSES = len(classes)
 
   COLORS = np.random.uniform(0, 255, size=(NUM_CLASSES, 3))
-
-  AUTHORS = authors.copy()
-  AUTHORS.insert(0, "__background__")
 
   to_pil = transforms.ToPILImage()
 

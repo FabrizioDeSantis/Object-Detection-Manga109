@@ -98,6 +98,14 @@ def create_fasterrcnn(n_classes, n_authors, model, args):
     # define a new head for the detector with required number of classes
     model.roi_heads.box_predictor = FastRCNNPredictor(in_features, n_classes)
 
+    # setting classification network threshold values
+    model.roi_heads.nms_thresh = args.box_nms_threshold
+    model.roi_heads.score_thresh = args.box_score_threshold
+    model.roi_heads.proposal_matcher.low_threshold = args.box_bg_iou_threshold
+    model.roi_heads.proposal_matcher.high_threshold = args.box_fg_iou_threshold
+    model.roi_heads.detections_per_img = args.box_detections_per_img
+
+
   # setting RPN network threshold values
 
   model.rpn.nms_thresh = args.rpn_nms_threshold
