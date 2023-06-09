@@ -6,6 +6,9 @@ import torch
 from custom_roi_heads import CustomRoIHeads, FastRCNNPredictorWithAuthor
 
 def set_anchor(model, args):
+  """
+  This function allows you to customize the anchor generator with user-defined sizes and aspect ratios.
+  """
   tuple_sizes_list = []
   tuple_aspect_ratios_list = []
   if args.size32:
@@ -24,9 +27,13 @@ def set_anchor(model, args):
      tuple_aspect_ratios_list.append(1.0)
   if args.ar2:
      tuple_aspect_ratios_list.append(2.0)
+  # create tuple for anchors sizes
   sizes = tuple(tuple_sizes_list)
+  # create tuple for anchors aspect ratios
   aspect_ratios = ((tuple(tuple_aspect_ratios_list)),) * len(sizes)
+  # replace default sizes with custom sizes
   model.rpn.anchor_generator.sizes = sizes
+  # replace default aspect ratios with custom aspect ratios
   model.rpn.anchor_generator.aspect_ratios = aspect_ratios
   print("Anchors sizes: " + str(model.rpn.anchor_generator.sizes))
   print("Anchors aspect ratios: " + str(model.rpn.anchor_generator.aspect_ratios))
@@ -131,6 +138,6 @@ def create_ssd300(n_classes):
   num_anchors = model.anchor_generator.num_anchors_per_location()
   in_channels=[]
   for layer in model.head.classification_head.module_list:
-    in_channels.append(layer)
+    in_channels.append(layer.in_channels)
   model.head.classification_head = SSDClassificationHead(in_channels, num_anchors, n_classes)
   return model

@@ -7,7 +7,7 @@ from torch.utils.tensorboard import SummaryWriter
 from solver import Solver
 from torch.utils.data import DataLoader
 from utils import load_all_images
-from datasetManga109 import CustomDataset, get_train_transform, get_valid_transform
+from datasetManga109 import CustomDataset, get_train_transform, get_valid_transform, get_train_transform_aug
 from metrics import calculate_mAP, calculate_mAP_authors
 import os
 from inference import get_prediction
@@ -29,7 +29,7 @@ def get_args():
   argParser.add_argument("-num_epochs", "--num_epochs", type = int, nargs = '?', const = 1, default = 20, help = "Number of epochs for training (Early stopping is implemented). Default is: 20")
   argParser.add_argument("-min_ep", "--num_min_epochs", type = int, nargs = '?', default = 1, help = "Minimum number of epochs before using early stopping.")
   argParser.add_argument("-fn", "--file_name", type = str, nargs = '?', const = 1, default = "model.pth", help = "Name of the file where the trained model will stored")
-  argParser.add_argument("-model", "--model", type = str, nargs = '?', const = 1, default="fasterrcnn", help = "Name of the model. Available models are: FasterRCNN (fasterrcnn), RetinaNet (retinanet). Default is fasterrcnn")
+  argParser.add_argument("-model", "--model", type = str, nargs = '?', const = 1, default="fasterrcnn", help = "Name of the model. Available models are: FasterRCNN (fasterrcnn), RetinaNet (retinanet), SSD300 (ssd). Default is fasterrcnn")
   argParser.add_argument("-bb", "--backbone", type = str, nargs = '?', const = 1, default = "resnet50", help = "Name of the backbone for a FasterRCNN model. Available backbones are: resnet50, resnet50v2, mobilenet. Default is resnet50")
   argParser.add_argument("-opt", "--optimizer", type = str, nargs = '?', const = 1, default = "SGD", help = "Name of the optimzer. Available optimizers are: SGD, Adam. Default is SGD")
   argParser.add_argument("-checkpoint_path", "--checkpoint_path", type = str, nargs = '?', const = 1, default = "./", help = "Checkpoint path. Default is ./")
@@ -39,10 +39,12 @@ def get_args():
   argParser.add_argument("-pretrained", "--pretrained", type = int, nargs= '?', const = 1, default = 1, help = "Use pretrained model.")
   argParser.add_argument("-dataset", "--dataset_dir", type = str, nargs = '?', const = 1, default = "Manga109/Manga109_released_2021_12_30", help = "Directory path of dataset")
   argParser.add_argument("-inference_path", "--inference_path", type = str, nargs = '?', const = 1, default = "./inference_images", help = "Path where the images for inference are saved.")
-
+  argParser.add_argument("-dataset_transform", "--dataset_transform", type = str, nargs = '?', const = 1, default = 0, help = "1 if you want to use transformations, 0 otherwise.")
+  
   argParser.add_argument("-det_thresh", "--detection_threshold", type = float, nargs = '?', const = 1, default = 0.50, help = "Detection threshold for the metric computation. Default is: 0.50")
-
+  argParser.add_argument("-split", "--split", type = float, nargs = '?', const = 1, default = 0.20, help = "The value used to split the dataset into train and validation subsets. Default is: 0.20 (80% training and 20% validation).")
   argParser.add_argument("-map_authors", "--map_authors", type = int, nargs = '?', const = 1, default = 1, help = "Calculate mAP for author classification (available only if the author classification is enabled).")
+  
   # classes customization
 
   argParser.add_argument("-body", "--body", type = int, nargs = '?', const = 1, default = 1, help = "1 if you want to train the model to recognize 'body' class, 0 otherwise.")
@@ -52,7 +54,7 @@ def get_args():
   
   # Specific FasterRCNN parameters
 
-  # anchor customization
+  # anchors customization
 
   # sizes
 
@@ -106,7 +108,7 @@ def check_args_integrity(args):
   if args.optimizer != "SGD" and args.optimizer != "Adam":
     print("Error. The optimizer must be SGD or Adam")
     os._exit(1)
-  if args.model != "fasterrcnn" and args.model != "retinanet":
+  if args.model != "fasterrcnn" and args.model != "retinanet" and args.model != "ssd":
     print("Error. The model name must be fasterrcnn or retinanet")
     os._exit(1)
   if args.backbone != "resnet50" and args.backbone != "resnet50v2" and args.backbone != "mobilenet":
@@ -145,6 +147,8 @@ def check_args_integrity(args):
   """
   if args.add_authors and args.model != "fasterrcnn":
     args.add_authors = 0
+  if args.model != "fasterrcnn":
+    args.backbone = "-"
 
 def main(args):
 
@@ -158,6 +162,7 @@ def main(args):
 
   DEVICE = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
+  # create class list
   CLASSES = ["__background__"]
   if args.body:
     CLASSES.append("body")
@@ -212,7 +217,7 @@ def main(args):
 
   manga109_root_dir = args.dataset_dir
   
-  # Custom parser from manga109api
+  # Custom parser from manga109api_custom
   p = manga109api_custom.Parser(root_dir=manga109_root_dir, authors_list=authors_list)
 
   images=[]
@@ -223,13 +228,16 @@ def main(args):
   Dataset split in training and test.
   Author labels are used to divide the dataset in order to have a dataset split that takes into account the author.
   '''
-  train_images, val_images, _ , _ = train_test_split(images, authors_labels, shuffle=True, stratify=authors_labels, test_size=0.2, random_state=args.seed)
+  train_images, val_images, _ , _ = train_test_split(images, authors_labels, shuffle=True, stratify=authors_labels, test_size=args.split, random_state=args.seed)
 
   # convert list in Pandas DataFrame
   df_train = pd.DataFrame(train_images, columns=["path", "annotation"])
   df_val = pd.DataFrame(val_images, columns=["path", "annotation"])
 
-  train_dataset = CustomDataset(df_train, RESIZE_TO, RESIZE_TO, CLASSES, get_train_transform())
+  if args.dataset_transform:
+    train_dataset = CustomDataset(df_train, RESIZE_TO, RESIZE_TO, CLASSES, get_train_transform_aug())
+  else:
+    train_dataset = CustomDataset(df_train, RESIZE_TO, RESIZE_TO, CLASSES, get_train_transform())
   val_dataset = CustomDataset(df_val, RESIZE_TO, RESIZE_TO, CLASSES, get_valid_transform())
 
   def collate_fn(batch):
@@ -264,7 +272,7 @@ def main(args):
   solver
   """
   solver = Solver(train_data_loader=train_loader, val_data_loader=val_loader, device=DEVICE, writer=writer, args=args, n_classes=NUM_CLASSES, n_authors=NUM_AUTHORS)
-  
+  solver.load_model(DEVICE)
   if args.mode == 2:
     # inference mode
     solver.load_model(DEVICE)

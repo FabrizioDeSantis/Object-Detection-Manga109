@@ -408,6 +408,23 @@ ADAM - RESNET50V2 - LR = 0.001
  'mar_medium': tensor(0.7241),
  'mar_small': tensor(0.3222)}
 
+LR = 0.0001
+
+{'map': tensor(0.5423),
+ 'map_50': tensor(0.8034),
+ 'map_75': tensor(0.5717),
+ 'map_large': tensor(0.4758),
+ 'map_medium': tensor(0.5693),
+ 'map_per_class': tensor([0.4634, 0.3140, 0.8223, 0.5695]),
+ 'map_small': tensor(0.2504),
+ 'mar_1': tensor(0.0611),
+ 'mar_10': tensor(0.4746),
+ 'mar_100': tensor(0.6055),
+ 'mar_100_per_class': tensor([0.5519, 0.3819, 0.8597, 0.6287]),
+ 'mar_large': tensor(0.5875),
+ 'mar_medium': tensor(0.6608),
+ 'mar_small': tensor(0.3126)}
+
 ADAM - RESNET50V2 - LR = 0.001 - AUTHORS
 
 {'map': tensor(0.5820),
@@ -819,6 +836,21 @@ RESNET - LR = 0.005 - ALL CLASSES - map@0.50:0.05:0.95
  'mar_large': tensor(0.6833),
  'mar_medium': tensor(0.7288),
  'mar_small': tensor(0.3204)}
+
+{'map': tensor(0.6022),
+ 'map_50': tensor(0.8579),
+ 'map_75': tensor(0.6397),
+ 'map_large': tensor(0.5872),
+ 'map_medium': tensor(0.6359),
+ 'map_per_class': tensor([0.5372, 0.3803, 0.8785, 0.6127]),
+ 'map_small': tensor(0.2858),
+ 'mar_1': tensor(0.0642),
+ 'mar_10': tensor(0.5101),
+ 'mar_100': tensor(0.6563),
+ 'mar_100_per_class': tensor([0.6108, 0.4448, 0.9064, 0.6632]),
+ 'mar_large': tensor(0.6741),
+ 'mar_medium': tensor(0.7195),
+ 'mar_small': tensor(0.3465)}
 
 -- 3 scales 3 ratio
 

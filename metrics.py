@@ -170,9 +170,9 @@ def calculate_mAP_authors(model, classes, authors, device, val_loader, args):
                     boxes = boxes[scores >= detection_threshold].astype(np.int32)
                     
                     # get all predicted classes
-                    predicted_classes = [classes[i] for i in out["labels"].cpu().numpy()]                    
-                    actual_classes = [classes[i] for i in targ["labels"].cpu().numpy()]
-                    actual_authors = [authors[i] for i in targ["author"].cpu().numpy()]
+                    #predicted_classes = [classes[i] for i in out["labels"].cpu().numpy()]                    
+                    #actual_classes = [classes[i] for i in targ["labels"].cpu().numpy()]
+                    #actual_authors = [authors[i] for i in targ["author"].cpu().numpy()]
 
                     actual_classes = targ["labels"].data.numpy()
                     actual_authors = targ["author"].data.numpy()
@@ -184,9 +184,11 @@ def calculate_mAP_authors(model, classes, authors, device, val_loader, args):
                     support_list = predicted_classes.copy()
                     
                     predicted_classes = predicted_classes[scores >= detection_threshold].astype(np.int32)
+                    predicted_authors = predicted_authors[scores >= detection_threshold].astype(np.int32)
+                    authors_scores = authors_scores[scores >= detection_threshold].astype(np.float32)
 
-                    predicted_authors = [predicted_authors[i] for i in range(len(support_list)) if scores[i]>=detection_threshold]
-                    authors_scores = [authors_scores[i] for i in range(len(support_list)) if scores[i]>=detection_threshold]
+                    #predicted_authors = [predicted_authors[i] for i in range(len(support_list)) if scores[i]>=detection_threshold]
+                    #authors_scores = [authors_scores[i] for i in range(len(support_list)) if scores[i]>=detection_threshold]
 
                     scores = scores[scores >= detection_threshold].astype(np.float32)    
 

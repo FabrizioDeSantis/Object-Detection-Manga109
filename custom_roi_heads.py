@@ -227,43 +227,38 @@ class CustomRoIHeads(RoIHeads):
             # Create labels for each prediction
             labels = torch.arange(num_classes, device=device)
             labels = labels.view(1, -1).expand_as(scores)
-
-            authors_labels = torch.arange(num_authors_classes, device=device)
-            authors_labels = authors_labels.view(1, -1).expand_as(authors_scores)
-
+            # create one tensor of authors scores for each classes/bbox
+            authors_scores = authors_scores.unsqueeze(1).repeat(1, num_classes, 1)
+            
             # Remove predictions with the background label
             boxes = boxes[:, 1:]
             scores = scores[:, 1:]
             labels = labels[:, 1:]
             authors_scores = authors_scores[:, 1:]
-            authors_labels = authors_labels[:, 1:]
-
             # Batch everything, by making every class prediction be a separate instance
             boxes = boxes.reshape(-1, 4)
             scores = scores.reshape(-1)
             labels = labels.reshape(-1)
-            authors_labels = authors_labels.reshape(-1)
-            authors_scores = authors_scores.reshape(-1)
-
+            authors_scores = authors_scores.reshape(-1, num_authors_classes)
             # Remove low scoring boxes
             inds = torch.where(scores > self.score_thresh)[0]
-            boxes, scores, labels, authors_labels, authors_scores = boxes[inds], scores[inds], labels[inds], authors_labels[inds], authors_scores[inds]
-
+            boxes, scores, labels, authors_scores = boxes[inds], scores[inds], labels[inds], authors_scores[inds]
             # remove empty boxes
             keep = box_ops.remove_small_boxes(boxes, min_size=1e-2)
-            boxes, scores, labels, authors_labels, authors_scores = boxes[keep], scores[keep], labels[keep], authors_labels[keep], authors_scores[keep]
+            boxes, scores, labels, authors_scores = boxes[keep], scores[keep], labels[keep], authors_scores[keep]
 
             # non-maximum suppression, independently done per class
             keep = box_ops.batched_nms(boxes, scores, labels, self.nms_thresh)
             # keep only topk scoring predictions (num_detections_per_img)
             keep = keep[: self.detections_per_img]
-            boxes, scores, labels, authors_labels, authors_scores = boxes[keep], scores[keep], labels[keep], authors_labels[keep], authors_scores[keep]
+            boxes, scores, labels, authors_scores = boxes[keep], scores[keep], labels[keep], authors_scores[keep]
 
             all_boxes.append(boxes)
             all_scores.append(scores)
             all_labels.append(labels)
-            all_authors_labels.append(authors_labels)
-            all_authors_scores.append(authors_scores)
+            # save the indices of the maximum scores as authors labels
+            all_authors_labels.append(torch.add(torch.max(authors_scores, 1).indices, 1))
+            all_authors_scores.append(torch.max(authors_scores, 1).values)
 
         return all_boxes, all_scores, all_labels, all_authors_labels, all_authors_scores
 

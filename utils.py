@@ -1,6 +1,10 @@
 def early_stopping(losses, patience):
-    best_loss = float('inf')  # Inizializza il miglior valore di loss come infinito
-    num_epochs_no_improvement = 0  # Contatore per tenere traccia del numero di epoche senza miglioramento
+    """
+    Early stopping implementation with given patience value.
+    If patience = 2 and there is no improvement for two epochs, early stopping will be triggered.
+    """
+    best_loss = float('inf') # initialize best loss value
+    num_epochs_no_improvement = 0  # counter to keep track of the number of epochs without improvement
     
     for epoch, loss in enumerate(losses):
         if loss < best_loss:
@@ -8,18 +12,22 @@ def early_stopping(losses, patience):
             num_epochs_no_improvement = 0
         else:
             num_epochs_no_improvement += 1
-
+        # check if number of epochs without improvement on loss value is equal or greater than the patience value.
         if num_epochs_no_improvement >= patience:
             print(f"Early stopping triggered at epoch {epoch}!")
             return True
     return False
 
 def check_annotation_validity(annotation, index, classes):
+    """
+    This function check the presence of at least one annotated box in the image.
+    """
+    count = 0
     for cl in classes[1:]:
-        if len(annotation["page"][index][str(cl)])>0:
-            continue
-        else:
-            return False
+        if len(annotation["page"][index][str(cl)])==0:
+            count += 1
+    if count == len(classes[1:]):
+        return False
     return True
 
 def load_all_images(parser, classes):

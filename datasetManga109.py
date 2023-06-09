@@ -9,8 +9,15 @@ import os
 def get_train_transform():
     return T.Compose([
         T.PILToTensor(),
+        T.ConvertImageDtype(torch.float)
+    ])
+# define the training transforms with data augmentation
+def get_train_transform_aug():
+   return T.Compose([
+        T.PILToTensor(),
         T.ConvertImageDtype(torch.float),
         T.RandomHorizontalFlip(p=0.5),
+        T.RandomPhotometricDistort(p=1.0),
         T.RandomZoomOut(p=0.5)
     ])
 
@@ -21,14 +28,15 @@ def get_valid_transform():
         T.ConvertImageDtype(torch.float)
     ])
 
+# 
 def pil_loader(path):
   with open(path, "rb") as f:
     img = Image.open(f)
     return img.convert("RGB")
 
-
+""" Custom class used to create the training and validation sets. """
 class CustomDataset(Dataset):
-
+  # Initialize configurations 
   def __init__(self, images, width, height, classes, transforms=None):
 
     self.transforms=transforms
@@ -41,6 +49,7 @@ class CustomDataset(Dataset):
     self.images_annotations = images["annotation"]
     self.all_images = ["".join(path.split(os.path.sep)[-2:]) for path in self.image_paths]
 
+  # Method used to get (image, target)
   def __getitem__(self, idx):
     image_path = self.image_paths[idx]
     # read image

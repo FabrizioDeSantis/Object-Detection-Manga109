@@ -29,11 +29,11 @@ The purpose of this deep learning project is to conduct an object detection task
 | opt                   | The optimizer used for training (SGD or Adam)                                                                                      |
 | early_stopping        | The threshold for early stopping during training (0 = disabled)                                                                    |
 | mode                  | Determines the mode of the execution (0 = training, 1 = resume training, 2 = inference)                                            |
-| split                 | The threshold used to split the dataset into train and validation subsets                                                          |
+| split                 | The value used to split the dataset into train and validation subsets                                                              |
 | dataset               | The path to retrieve the dataset                                                                                                   |
 | checkpoint_path       | The path to save and retrieve the trained model                                                                                    |
 | inference_path        | The path that contains the images for inference                                                                                    |
-| dataset_aug           | Determines if data augmentation is applied to the images                                                                           |
+| dataset_transform     | Determines if transformations (HorizontalFlip etc.) are applied to the images                                                      |
 | res                   | Resize dimensions of the input images for preprocessing                                                                            |
 | det_thresh            | Value of detection treshold for inference and metrics computation                                                                  |
 | body                  | Include "body" class                                                                                                               |
