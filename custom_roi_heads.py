@@ -41,10 +41,12 @@ def fastrcnn_loss_with_authors(class_logits, box_regression, labels, regression_
         box_regression (Tensor)
         labels (list[BoxList])
         regression_targets (Tensor)
-
+        authors_logits (Tensor)
+        authors (list[BoxList])
     Returns:
         classification_loss (Tensor)
         box_loss (Tensor)
+        authors_loss (Tensor)
     """
     labels = torch.cat(labels, dim=0)
     authors = torch.cat(authors, dim=0)
