@@ -47,8 +47,12 @@ class Solver(object):
 
   def save_model(self):
     # function to save the model
-    check_path = os.path.join(self.args.checkpoint_path, self.model_name)
-    torch.save(self.model.state_dict(), check_path)
+    ext = os.path.splitext(self.model_name)[1].lower()
+    if ext == ".pth":
+      check_path = os.path.join(self.args.checkpoint_path, self.model_name)
+      torch.save(self.model.state_dict(), check_path)
+    elif ext == ".pt":
+      torch.save(self.model, self.model_name)
     print("Model saved!")
 
   def load_model(self, device):
@@ -241,5 +245,3 @@ class Solver(object):
     print("Finished validating")
 
     return val_losses
-
-    
