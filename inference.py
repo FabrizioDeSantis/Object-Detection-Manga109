@@ -1,4 +1,4 @@
-import cv2
+#import cv2
 import matplotlib.pyplot as plt
 import torch
 import os
@@ -97,11 +97,11 @@ def get_prediction(inference_model, classes, args):
       for j, box in enumerate(draw_boxes):
             class_name = predicted_classes[j]
             color = COLORS[classes.index(class_name)]
-            cv2.rectangle(img, (int(box[0]), int(box[1])),(int(box[2]), int(box[3])), color, 2)
-            cv2.putText(img, class_name, 
-                                  (int(box[0]), int(box[1]-5)),
-                                  cv2.FONT_HERSHEY_SIMPLEX, 0.7, color, 
-                                  2, lineType=cv2.LINE_AA)
+            #cv2.rectangle(img, (int(box[0]), int(box[1])),(int(box[2]), int(box[3])), color, 2)
+            # cv2.putText(img, class_name, 
+            #                       (int(box[0]), int(box[1]-5)),
+            #                       cv2.FONT_HERSHEY_SIMPLEX, 0.7, color, 
+            #                       2, lineType=cv2.LINE_AA)
       plt.figure(figsize = (10, 10))
       plt.imshow(img)
       # get path and name of the image

@@ -203,7 +203,7 @@ class Solver(object):
         if i % self.args.print_every == (self.args.print_every-1):
           self.writer.add_scalar("epoch_avg_train_loss", np.average(train_losses), epoch*len(self.train_loader) + i)
           self.writer.add_scalar("epoch_avg_author_train_loss", np.average(author_losses), epoch*len(self.train_loader) + i)
-          self.writer.add_scalar("epoch_avg_classifier_train_loss", np.average(classifier_losses), epoch*len(self.val_loader) + i)
+          self.writer.add_scalar("epoch_avg_classifier_train_loss", np.average(classifier_losses), epoch*len(self.train_loader) + i)
 
         progress_bar.set_description(desc=f"Loss: {loss_value:.4f}, Loss classifier: {loss_classifier:.4f}")
 
