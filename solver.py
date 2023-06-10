@@ -190,9 +190,9 @@ class Solver(object):
         loss_dict = self.model(images, targets) # return the loss
 
         loss_classifier = loss_dict["loss_classifier"]
-        classifier_losses.append(loss_classifier)
+        classifier_losses.append(loss_classifier.item())
         author_loss = loss_dict["loss_authors"]
-        author_losses.append(author_loss)
+        author_losses.append(author_loss.item())
 
         losses = sum(loss for loss in loss_dict.values())
         loss_value = losses.item()
@@ -209,6 +209,7 @@ class Solver(object):
 
       val_loss=self.validate_with_author(epoch)
       val_loss = (np.average(val_loss))
+      avg_val_losses.append(val_loss)
 
       print(f"Epoch #{epoch+1} train loss: {np.average(train_losses):.3f}")   
       print(f"Epoch #{epoch+1} validation loss: {val_loss:.3f}")  
@@ -246,9 +247,9 @@ class Solver(object):
           loss_dict = self.model(images, targets)
       losses = sum(loss for loss in loss_dict.values())
       loss_classifier = loss_dict["loss_classifier"]
-      classifier_losses.append(loss_classifier)
+      classifier_losses.append(loss_classifier.item())
       author_loss = loss_dict["loss_authors"]
-      author_losses.append(author_loss)
+      author_losses.append(author_loss.item())
       loss_value = losses.item()
       val_losses.append(loss_value)
 
