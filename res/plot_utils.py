@@ -22,6 +22,18 @@ for element in elements:
 for i, d in enumerate(js):
   kw = next(iter(d))
   data = pd.DataFrame.from_dict(d)
-  fig = data.plot(kind="bar", xlabel=str(kw), x=str(kw), rot=0, figsize=(15, 10)).get_figure()
+  fig, ax = plt.subplots(figsize=(15, 10))
+  if kw=="classes":
+     data.plot(kind="bar", x=str(kw), y=["mAP", "mAP (single)"], rot=0, ax=ax)
+  else:
+    data.plot(kind="bar", x=str(kw), y=["mAP", "mAP_50", "mAP_75"], rot=0, ax=ax)
+  # Add values on top of bars
+  for p in ax.patches:
+      ax.annotate(str(p.get_height()), (p.get_x() + p.get_width() / 2, p.get_height()), ha='center', va='bottom')
 
+  plt.xlabel(str(kw))
+  plt.ylabel("Value")
+  plt.title("Results")
+  plt.legend()
+  #plt.show()
   fig.savefig("results-" + str(kw) + ".png")

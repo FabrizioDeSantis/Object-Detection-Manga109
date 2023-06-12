@@ -63,6 +63,7 @@ In addition to the two original branches (classification and regression), a new 
 | box_score_th          | During inference, only return proposals with a classification score greater than box_score_th                                      |
 | box_detections        | Maximum number of detections per image, for all classes                                                                            |
 | map_authors           | Calculate mAP for author classification (available only if the author classification is enabled)                                   |
+| save_pred             | 1 if you want to save the first prediction of val loader on tensorboard, 0 otherwise                                               |
 
 ### Prerequisites
 

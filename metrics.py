@@ -1,9 +1,10 @@
 from torchmetrics.detection.mean_ap import MeanAveragePrecision
 import torch
 import numpy as np
+from utils import save_predictions_on_tb
 from pprint import pprint
 
-def calculate_mAP(model, classes, device, val_loader, args):
+def calculate_mAP(model, classes, device, val_loader, args, writer, draw_prediction):
     """
     This function calculate the mean Average Precision for the test set.
     Mean Average Precision from from torchmetrics.detection.mean_ap was used to calculate the metric.
@@ -26,7 +27,7 @@ def calculate_mAP(model, classes, device, val_loader, args):
 
     with torch.no_grad():
 
-        for _, data in enumerate(val_loader):
+        for i, data in enumerate(val_loader):
 
             images, targets = data
 
@@ -64,6 +65,14 @@ def calculate_mAP(model, classes, device, val_loader, args):
                             labels = targ["labels"]
               )
               actual_avg.append(actual_metrics_dictionary)
+            
+            if draw_prediction and i==0:
+                """
+                save first predicted image of val loader on Tensorboard
+                """
+                pc = [classes[i] for i in out[0]["labels"].cpu().numpy()] # get names of predicted classes
+                ac = [classes[i] for i in targ[0]["labels"].cpu().numpy()]
+                save_predictions_on_tb(targets[0]["boxes"], outputs[0]["boxes"], pc, ac, images[0], writer)
 
     # calculate mean average precision
     metric.update(predictions_avg, actual_avg)
