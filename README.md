@@ -11,6 +11,11 @@ The purpose of this deep learning project is to conduct an object detection task
 - `utils.py`: This module contains various function for different purposes, such as checking for annotations in images, the early stopping implementation and uploading image information.
 - `inference.py`: This module is responsible for making inference on given images.
 
+## Author classification
+
+In addition to the two original branches (classification and regression), a new branch has been added to classify authors. The new classifier is similar to the original classifier, with the only difference that it will have to recognize a number of classes equal to the number of authors.
+![Structure](./faster_authors_model.jpeg)
+
 ## The parameters that can be provided through the command line and allow customization of the execution are:
 
 | Argument              | Description                                                                                                                        |
