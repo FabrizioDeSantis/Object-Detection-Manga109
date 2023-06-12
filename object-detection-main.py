@@ -39,7 +39,6 @@ def get_args():
   argParser.add_argument("-dataset", "--dataset_dir", type = str, nargs = '?', const = 1, default = "Manga109/Manga109_released_2021_12_30", help = "Directory path of dataset")
   argParser.add_argument("-inference_path", "--inference_path", type = str, nargs = '?', const = 1, default = "./inference_images", help = "Path where the images for inference are saved.")
   argParser.add_argument("-dataset_transform", "--dataset_transform", type = str, nargs = '?', const = 1, default = 0, help = "1 if you want to use transformations, 0 otherwise.")
-  argParser.add_argument("-map_author", "--map_author", type = int, nargs = '?', const = 1, default = 0, help = "1 if you want to calculate mAP for authors, 0 otherwise. Default is 0 (only available when author classification is enabled).")
 
   argParser.add_argument("-det_thresh", "--detection_threshold", type = float, nargs = '?', const = 1, default = 0.50, help = "Detection threshold for the metric computation. Default is: 0.50")
   argParser.add_argument("-split", "--split", type = float, nargs = '?', const = 1, default = 0.20, help = "The value used to split the dataset into train and validation subsets. Default is: 0.20 (80% training and 20% validation).")
@@ -194,6 +193,7 @@ def main(args):
     print("Epochs: " + str(NUM_EPOCHS))
     print("Authors: " + ("Included" if args.add_authors else "Not included"))
     print("Classes: " + str(NUM_CLASSES))
+    print("Data aug: " + ("Yes" if args.dataset_transform else "No"))
     print("-----------------------------")
 
     '''
@@ -291,9 +291,9 @@ def main(args):
     else:
       solver.train()
     if args.map_authors:
-      calculate_mAP_authors(model=solver.model, classes=CLASSES, authors=AUTHORS, device=solver.device, val_loader=solver.val_loader, args = args)
+      calculate_mAP_authors(model=solver.model, device=solver.device, val_loader=solver.val_loader, args = args)
     else:
-      calculate_mAP(model=solver.model, classes=CLASSES, device=solver.device, val_loader=solver.val_loader, args=args)
+      calculate_mAP(model=solver.model, device=solver.device, val_loader=solver.val_loader, args=args)
 
 if __name__=="__main__":
   args = get_args()

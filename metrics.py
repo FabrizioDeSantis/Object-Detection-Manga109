@@ -26,7 +26,7 @@ def calculate_mAP(model, classes, device, val_loader, args):
 
     with torch.no_grad():
 
-        for i, data in enumerate(val_loader):
+        for _, data in enumerate(val_loader):
 
             images, targets = data
 
@@ -40,70 +40,38 @@ def calculate_mAP(model, classes, device, val_loader, args):
             outputs = [{k: v.to('cpu') for k, v in t.items()} for t in outputs]
             targets = [{k: v.to('cpu') for k, v in t.items()} for t in targets]
 
-            for (out, targ) in zip(outputs, targets):
-                # support lists that will contain the coordinates of the bounding boxes of each image
-                bounding_boxes_predicted_img = []
-                bounding_boxes_target_img = []
-                # support lists that will contain the labels (target and predicted) of each image
-                labels_pred_img = []
-                labels_target_img = []
-                # support list that will contain the confidence scores of eache image
-                scrs_img = []
-                # carry further only if there are detected boxes
-                if len(out["boxes"]) != 0:
-
-                    boxes = out["boxes"].data.numpy()
-                    scores = out["scores"].data.numpy()
-                    # filtering according to the threshold
-                    boxes = boxes[scores >= detection_threshold].astype(np.int32)
-                    
-                    # get all predicted and actual classes
-                    predicted_classes = [classes[i] for i in out["labels"].cpu().numpy()]                    
-                    actual_classes = [classes[i] for i in targ["labels"].cpu().numpy()]
-
-                    actual_classes = targ["labels"].data.numpy()
-                    target_boxes = targ["boxes"].data.numpy()
-                    predicted_classes = out["labels"].data.numpy()
-                    # filtering according to the detection threshold
-                    predicted_classes = predicted_classes[scores >= detection_threshold].astype(np.int32)
-                    scores = scores[scores >= detection_threshold].astype(np.float32)
-                    # iterate over predicted boxes and target boxes and save all the necessary parameters
-                    for i in range(0, len(boxes)):
-                        bs = []
-                        bs.append(boxes[i][0])
-                        bs.append(boxes[i][1])
-                        bs.append(boxes[i][2])
-                        bs.append(boxes[i][3])
-                        bounding_boxes_predicted_img.append(bs)
-                        scrs_img.append(scores[i])
-                        labels_pred_img.append(predicted_classes[i])
-
-                    for i in range(0, len(target_boxes)):
-                        bs = []
-                        bs.append(target_boxes[i][0])
-                        bs.append(target_boxes[i][1])
-                        bs.append(target_boxes[i][2])
-                        bs.append(target_boxes[i][3])
-                        bounding_boxes_target_img.append(bs)
-                        labels_target_img.append(actual_classes[i])
-                # create dictionaries for current image
-                predicted_metrics_dictionary = dict(boxes = torch.tensor(bounding_boxes_predicted_img),
-                            scores = torch.tensor(scrs_img),
-                            labels = torch.tensor(labels_pred_img)
-                    )
-                actual_metrics_dictionary = dict(boxes = torch.tensor(bounding_boxes_target_img),
-                            labels = torch.tensor(labels_target_img)
-                    )
+            for out in outputs:
+              boxes = out["boxes"].data.numpy()
+              scores = out["scores"].data.numpy()
+              # get all predicted classes
+              predicted_classes = out["labels"].data.numpy()
+              # filtering according to the threshold
+              boxes = boxes[scores >= detection_threshold].astype(np.int32)
+              # filtering according to the detection threshold
+              predicted_classes = predicted_classes[scores >= detection_threshold].astype(np.int32)
+              scores = scores[scores >= detection_threshold].astype(np.float32)
+              # create dictionary for current image
+              predicted_metrics_dictionary = dict(boxes = torch.tensor(boxes),
+                            scores = torch.tensor(scores),
+                            labels = torch.tensor(predicted_classes)
+              )
                 
-                predictions_avg.append(predicted_metrics_dictionary)
-                actual_avg.append(actual_metrics_dictionary)
+              predictions_avg.append(predicted_metrics_dictionary)
+
+            for targ in targets:
+              # create dictionary for current image
+              actual_metrics_dictionary = dict(boxes = targ["boxes"],
+                            labels = targ["labels"]
+              )
+              actual_avg.append(actual_metrics_dictionary)
+
     # calculate mean average precision
     metric.update(predictions_avg, actual_avg)
     # display results
     pprint(metric.compute())
 
 
-def calculate_mAP_authors(model, classes, authors, device, val_loader, args):
+def calculate_mAP_authors(model, device, val_loader, args):
     """
     This function calculate the mean Average Precision for the test set.
     This function is similar to the previous one but and implements the calculation of the metric also for the classification of the author.
@@ -131,7 +99,7 @@ def calculate_mAP_authors(model, classes, authors, device, val_loader, args):
 
     with torch.no_grad():
         
-        for i, data in enumerate(val_loader):
+        for _, data in enumerate(val_loader):
 
             images, targets = data
             
@@ -144,98 +112,46 @@ def calculate_mAP_authors(model, classes, authors, device, val_loader, args):
             # load all detection to CPU for further operations
             outputs = [{k: v.to('cpu') for k, v in t.items()} for t in outputs]
             targets = [{k: v.to('cpu') for k, v in t.items()} for t in targets]
+            # iterate over predictions
+            for out in outputs:
+              boxes = out["boxes"].data.numpy()
+              scores = out["scores"].data.numpy()
+              authors_scores = out["authors_scores"].data.numpy()
+              # get all predicted classes
+              predicted_classes = out["labels"].data.numpy()
+              predicted_authors = out["authors"].data.numpy()
 
-            for (out, targ) in zip(outputs, targets):
-                # support lists that will contain the coordinates of the bounding boxes of each image
-                bounding_boxes_pred = []
-                bounding_boxes_targ = []
-                # support lists that will contain the labels (original classes and authors) of each image
-                labels_pred = []
-                authors_pred = []
-                # support lists that will contain the labels (original classes and authors) of each image
-                labels_target = []
-                authors_target = []
-                # support lists that will contain the confidence scores (original classes and authors) of each image
-                scrs = []
-                scrs_authors = []
-                # carry further only if there are detected boxes
-                if len(out["boxes"]) != 0:
+              # filtering according to detection threshold
+              boxes = boxes[scores >= detection_threshold].astype(np.int32)
+              predicted_classes = predicted_classes[scores >= detection_threshold].astype(np.int32)
+              predicted_authors = predicted_authors[scores >= detection_threshold].astype(np.int32)
+              authors_scores = authors_scores[scores >= detection_threshold].astype(np.float32)
+              scores = scores[scores >= detection_threshold].astype(np.float32)    
 
-                    boxes = out["boxes"].data.numpy()
-
-                    scores = out["scores"].data.numpy()
-                    authors_scores = out["authors_scores"].data.numpy()
-
-                    # filtering according to the threshold
-                    boxes = boxes[scores >= detection_threshold].astype(np.int32)
+              # create dictionaries for current image
+              predicted_metrics_dictionary = dict(boxes = torch.tensor(boxes),
+                            scores = torch.tensor(scores),
+                            labels = torch.tensor(predicted_classes)
+              )
                     
-                    # get all predicted classes
-
-                    actual_classes = targ["labels"].data.numpy()
-                    actual_authors = targ["author"].data.numpy()
-                    target_boxes = targ["boxes"].data.numpy()
-
-                    predicted_classes = out["labels"].data.numpy()
-                    predicted_authors = out["authors"].data.numpy()
-
-                    support_list = predicted_classes.copy()
+              predicted_metrics_authors_dictionary = dict(boxes = torch.tensor(boxes),
+                            scores = torch.tensor(scores),
+                            labels = torch.tensor(predicted_authors)
+              )
+              predictions_avg.append(predicted_metrics_dictionary)
+              predictions_authors_avg.append(predicted_metrics_authors_dictionary)
+            # iterate over targets
+            for targ in targets:
                     
-                    predicted_classes = predicted_classes[scores >= detection_threshold].astype(np.int32)
-                    predicted_authors = predicted_authors[scores >= detection_threshold].astype(np.int32)
-                    authors_scores = authors_scores[scores >= detection_threshold].astype(np.float32)
-
-                    #predicted_authors = [predicted_authors[i] for i in range(len(support_list)) if scores[i]>=detection_threshold]
-                    #authors_scores = [authors_scores[i] for i in range(len(support_list)) if scores[i]>=detection_threshold]
-
-                    scores = scores[scores >= detection_threshold].astype(np.float32)    
-
-                    # iterate over predicted boxes and target boxes and save all the necessary parameters
-                    for i in range(0, len(boxes)):
-                        bs = []  
-                        bs.append(boxes[i][0])
-                        bs.append(boxes[i][1])
-                        bs.append(boxes[i][2])
-                        bs.append(boxes[i][3])
-                        bounding_boxes_pred.append(bs)
-                        scrs.append(scores[i])
-                        scrs_authors.append(authors_scores[i])
-                        labels_pred.append(predicted_classes[i])
-                        authors_pred.append(predicted_authors[i])
-
-                    for i in range(0, len(target_boxes)):
-                        bs = []
-                        bs.append(target_boxes[i][0])
-                        bs.append(target_boxes[i][1])
-                        bs.append(target_boxes[i][2])
-                        bs.append(target_boxes[i][3])
-                        bounding_boxes_targ.append(bs)
-                        labels_target.append(actual_classes[i])
-                        authors_target.append(actual_authors[i])
-
-                # create dictionaries for current image
-                predicted_metrics_dictionary = dict(boxes = torch.tensor(bounding_boxes_pred),
-                            scores = torch.tensor(scrs),
-                            labels = torch.tensor(labels_pred)
-                    )
+              actual_metrics_dictionary = dict(boxes = targ["boxes"],
+                            labels = targ["labels"]
+              )
                     
-                predicted_metrics_authors_dictionary = dict(boxes = torch.tensor(bounding_boxes_pred),
-                            scores = torch.tensor(scrs_authors),
-                            labels = torch.tensor(authors_pred)
-                    )
-                    
-                actual_metrics_dictionary = dict(boxes = torch.tensor(bounding_boxes_targ),
-                            labels = torch.tensor(labels_target)
-                    )
-                    
-                actual_metrics_authors_dictionary = dict(boxes = torch.tensor(bounding_boxes_targ),
-                            labels = torch.tensor(authors_target)
-                    )
-                    
-                predictions_avg.append(predicted_metrics_dictionary)
-                actual_avg.append(actual_metrics_dictionary)
-                ####################################################
-                predictions_authors_avg.append(predicted_metrics_authors_dictionary)
-                actual_authors_avg.append(actual_metrics_authors_dictionary)
+              actual_metrics_authors_dictionary = dict(boxes = targ["boxes"],
+                            labels = targ["author"]
+              )
+              actual_avg.append(actual_metrics_dictionary)
+              actual_authors_avg.append(actual_metrics_authors_dictionary)
     # calculate mean average precision for original classes
     metric.update(predictions_avg, actual_avg)
     # display results for original classes

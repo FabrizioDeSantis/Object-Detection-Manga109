@@ -19,10 +19,9 @@ js = []
 for element in elements:
   js.append(json.loads(element))
 
-print(js)
-
 for i, d in enumerate(js):
   kw = next(iter(d))
   data = pd.DataFrame.from_dict(d)
   fig = data.plot(kind="bar", xlabel=str(kw), x=str(kw), rot=0, figsize=(15, 10)).get_figure()
+
   fig.savefig("results-" + str(kw) + ".png")

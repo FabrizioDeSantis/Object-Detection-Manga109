@@ -47,6 +47,53 @@
  'mar_medium': tensor(0.5804),
  'mar_small': tensor(0.2353)}
 
+{'map': tensor(0.3584),
+ 'map_50': tensor(0.5817),
+ 'map_75': tensor(0.3863),
+ 'map_large': tensor(0.2605),
+ 'map_medium': tensor(0.4200),
+ 'map_per_class': tensor([0.2334, 0.1692, 0.6396, 0.3915]),
+ 'map_small': tensor(0.1886),
+ 'mar_1': tensor(0.0537),
+ 'mar_10': tensor(0.3562),
+ 'mar_100': tensor(0.4048),
+ 'mar_100_per_class': tensor([0.2890, 0.1987, 0.6881, 0.4435]),
+ 'mar_large': tensor(0.3535),
+ 'mar_medium': tensor(0.4958),
+ 'mar_small': tensor(0.2379)}
+ 
+{'map': tensor(0.3723),
+ 'map_50': tensor(0.5984),
+ 'map_75': tensor(0.4000),
+ 'map_large': tensor(0.2812),
+ 'map_medium': tensor(0.4597),
+ 'map_per_class': tensor([0.2769, 0.1707, 0.6795, 0.3620]),
+ 'map_small': tensor(0.1883),
+ 'mar_1': tensor(0.0541),
+ 'mar_10': tensor(0.3662),
+ 'mar_100': tensor(0.4195),
+ 'mar_100_per_class': tensor([0.3394, 0.2017, 0.7243, 0.4125]),
+ 'mar_large': tensor(0.3626),
+ 'mar_medium': tensor(0.5272),
+ 'mar_small': tensor(0.2350)}
+
+ -- UNTRAINED
+
+ {'map': tensor(0.3839),
+ 'map_50': tensor(0.6033),
+ 'map_75': tensor(0.4092),
+ 'map_large': tensor(0.3304),
+ 'map_medium': tensor(0.4741),
+ 'map_per_class': tensor([0.2881, 0.1680, 0.6917, 0.3879]),
+ 'map_small': tensor(0.1940),
+ 'mar_1': tensor(0.0551),
+ 'mar_10': tensor(0.3748),
+ 'mar_100': tensor(0.4326),
+ 'mar_100_per_class': tensor([0.3577, 0.1984, 0.7327, 0.4417]),
+ 'mar_large': tensor(0.3973),
+ 'mar_medium': tensor(0.5501),
+ 'mar_small': tensor(0.2385)}
+
 ---- retinanet
 
 {'map': tensor(0.4959),
@@ -123,6 +170,53 @@
  'mar_large': tensor(0.5486),
  'mar_medium': tensor(0.6217),
  'mar_small': tensor(0.2255)}
+
+-- untrained
+
+{'map': tensor(0.3227),
+ 'map_50': tensor(0.5120),
+ 'map_75': tensor(0.3414),
+ 'map_large': tensor(0.2224),
+ 'map_medium': tensor(0.3479),
+ 'map_per_class': tensor([0.1813, 0.0815, 0.6363, 0.3918]),
+ 'map_small': tensor(0.0944),
+ 'mar_1': tensor(0.0489),
+ 'mar_10': tensor(0.3145),
+ 'mar_100': tensor(0.3752),
+ 'mar_100_per_class': tensor([0.2527, 0.1011, 0.7096, 0.4375]),
+ 'mar_large': tensor(0.2832),
+ 'mar_medium': tensor(0.4286),
+ 'mar_small': tensor(0.1138)}
+
+{'map': tensor(0.3849),
+ 'map_50': tensor(0.5883),
+ 'map_75': tensor(0.4036),
+ 'map_large': tensor(0.2699),
+ 'map_medium': tensor(0.4091),
+ 'map_per_class': tensor([0.1650, 0.1965, 0.6987, 0.4793]),
+ 'map_small': tensor(0.1378),
+ 'mar_1': tensor(0.0542),
+ 'mar_10': tensor(0.3678),
+ 'mar_100': tensor(0.4313),
+ 'mar_100_per_class': tensor([0.2071, 0.2360, 0.7483, 0.5337]),
+ 'mar_large': tensor(0.3200),
+ 'mar_medium': tensor(0.4838),
+ 'mar_small': tensor(0.1689)}
+
+{'map': tensor(0.3730),
+ 'map_50': tensor(0.5782),
+ 'map_75': tensor(0.3880),
+ 'map_large': tensor(0.2740),
+ 'map_medium': tensor(0.3883),
+ 'map_per_class': tensor([0.1681, 0.1960, 0.6781, 0.4499]),
+ 'map_small': tensor(0.1301),
+ 'mar_1': tensor(0.0540),
+ 'mar_10': tensor(0.3638),
+ 'mar_100': tensor(0.4197),
+ 'mar_100_per_class': tensor([0.2168, 0.2388, 0.7247, 0.4987]),
+ 'mar_large': tensor(0.3341),
+ 'mar_medium': tensor(0.4672),
+ 'mar_small': tensor(0.1642)}
 
 ---- FASTER RCNN - BACKBONE
 
@@ -720,6 +814,23 @@ RESNET - LR = 0.005 - ALL CLASSES - map@0.50:0.05:0.95
  'mar_medium': tensor(0.7156),
  'mar_small': tensor(0.3263)}
 
+- untrained
+
+{'map': tensor(0.4351),
+ 'map_50': tensor(0.7133),
+ 'map_75': tensor(0.4369),
+ 'map_large': tensor(0.3252),
+ 'map_medium': tensor(0.4536),
+ 'map_per_class': tensor([0.2437, 0.2329, 0.7325, 0.5312]),
+ 'map_small': tensor(0.1767),
+ 'mar_1': tensor(0.0538),
+ 'mar_10': tensor(0.4001),
+ 'mar_100': tensor(0.5001),
+ 'mar_100_per_class': tensor([0.3298, 0.2926, 0.7789, 0.5992]),
+ 'mar_large': tensor(0.3875),
+ 'mar_medium': tensor(0.5463),
+ 'mar_small': tensor(0.2331)}
+
 -- 256 {1:1}
 
 {'map': tensor(0.6091),
@@ -1051,6 +1162,38 @@ RESNET - LR = 0.005 - ALL CLASSES - map@0.50:0.05:0.95
  'mar_medium': tensor(0.0371),
  'mar_small': tensor(0.0191)}
 
+-- no threshold
+
+{'map': tensor(0.6371),
+ 'map_50': tensor(0.9144),
+ 'map_75': tensor(0.6838),
+ 'map_large': tensor(0.6230),
+ 'map_medium': tensor(0.6730),
+ 'map_per_class': tensor([0.5950, 0.4220, 0.8937, 0.6378]),
+ 'map_small': tensor(0.3760),
+ 'mar_1': tensor(0.0639),
+ 'mar_10': tensor(0.5171),
+ 'mar_100': tensor(0.6949),
+ 'mar_100_per_class': tensor([0.6739, 0.4915, 0.9215, 0.6927]),
+ 'mar_large': tensor(0.7485),
+ 'mar_medium': tensor(0.7576),
+ 'mar_small': tensor(0.4582)}
+
+{'map': tensor(0.6346),
+ 'map_50': tensor(0.9138),
+ 'map_75': tensor(0.6798),
+ 'map_large': tensor(0.6412),
+ 'map_medium': tensor(0.6672),
+ 'map_per_class': tensor([0.5919, 0.4206, 0.8899, 0.6359]),
+ 'map_small': tensor(0.3475),
+ 'mar_1': tensor(0.0637),
+ 'mar_10': tensor(0.5174),
+ 'mar_100': tensor(0.6923),
+ 'mar_100_per_class': tensor([0.6693, 0.4895, 0.9188, 0.6914]),
+ 'mar_large': tensor(0.7327),
+ 'mar_medium': tensor(0.7549),
+ 'mar_small': tensor(0.4239)}
+
 -- threshold 0.30
 
 {'map': tensor(0.6341),
@@ -1068,6 +1211,21 @@ RESNET - LR = 0.005 - ALL CLASSES - map@0.50:0.05:0.95
  'mar_medium': tensor(0.7567),
  'mar_small': tensor(0.3657)}
 
+{'map': tensor(0.6266),
+ 'map_50': tensor(0.8919),
+ 'map_75': tensor(0.6770),
+ 'map_large': tensor(0.6039),
+ 'map_medium': tensor(0.6645),
+ 'map_per_class': tensor([0.5808, 0.4099, 0.8875, 0.6282]),
+ 'map_small': tensor(0.3579),
+ 'mar_1': tensor(0.0639),
+ 'mar_10': tensor(0.5151),
+ 'mar_100': tensor(0.6815),
+ 'mar_100_per_class': tensor([0.6525, 0.4750, 0.9161, 0.6824]),
+ 'mar_large': tensor(0.7152),
+ 'mar_medium': tensor(0.7466),
+ 'mar_small': tensor(0.4196)}
+
 -- threshold 0.40
 
 {'map': tensor(0.6168),
@@ -1084,6 +1242,53 @@ RESNET - LR = 0.005 - ALL CLASSES - map@0.50:0.05:0.95
  'mar_large': tensor(0.6797),
  'mar_medium': tensor(0.7346),
  'mar_small': tensor(0.3499)}
+
+{'map': tensor(0.6225),
+ 'map_50': tensor(0.8853),
+ 'map_75': tensor(0.6740),
+ 'map_large': tensor(0.5997),
+ 'map_medium': tensor(0.6601),
+ 'map_per_class': tensor([0.5738, 0.4047, 0.8856, 0.6259]),
+ 'map_small': tensor(0.3353),
+ 'mar_1': tensor(0.0639),
+ 'mar_10': tensor(0.5139),
+ 'mar_100': tensor(0.6757),
+ 'mar_100_per_class': tensor([0.6428, 0.4674, 0.9137, 0.6787]),
+ 'mar_large': tensor(0.7088),
+ 'mar_medium': tensor(0.7420),
+ 'mar_small': tensor(0.3916)}
+
+-- threshold 0.50
+
+{'map': tensor(0.6168),
+ 'map_50': tensor(0.8718),
+ 'map_75': tensor(0.6671),
+ 'map_large': tensor(0.5905),
+ 'map_medium': tensor(0.6558),
+ 'map_per_class': tensor([0.5644, 0.3965, 0.8837, 0.6226]),
+ 'map_small': tensor(0.3139),
+ 'mar_1': tensor(0.0639),
+ 'mar_10': tensor(0.5121),
+ 'mar_100': tensor(0.6684),
+ 'mar_100_per_class': tensor([0.6309, 0.4574, 0.9113, 0.6742]),
+ 'mar_large': tensor(0.6949),
+ 'mar_medium': tensor(0.7365),
+ 'mar_small': tensor(0.3663)}
+
+{'map': tensor(0.5988),
+    'map_50': tensor(0.8667),
+    'map_75': tensor(0.6460),
+    'map_large': tensor(0.5291),
+    'map_medium': tensor(0.6293),
+    'map_per_class': tensor([0.5278, 0.4096, 0.8517, 0.6060]),
+    'map_small': tensor(0.2723),
+    'mar_1': tensor(0.0259),
+    'mar_10': tensor(0.2383),
+    'mar_100': tensor(0.6548),
+    'mar_100_per_class': tensor([0.5962, 0.4755, 0.8874, 0.6601]),
+    'mar_large': tensor(0.6486),
+    'mar_medium': tensor(0.7146),
+    'mar_small': tensor(0.3289)}
 
 -- threshold 0.60
 
@@ -1135,6 +1340,23 @@ RESNET - LR = 0.005 - ALL CLASSES - map@0.50:0.05:0.95
  'mar_large': tensor(0.6641),
  'mar_medium': tensor(0.6828),
  'mar_small': tensor(0.3060)}
+
+-- threshold 0.90
+
+{'map': tensor(0.5245),
+ 'map_50': tensor(0.7013),
+ 'map_75': tensor(0.5851),
+ 'map_large': tensor(0.5004),
+ 'map_medium': tensor(0.5736),
+ 'map_per_class': tensor([0.4138, 0.2838, 0.8232, 0.5774]),
+ 'map_small': tensor(0.1998),
+ 'mar_1': tensor(0.0632),
+ 'mar_10': tensor(0.4697),
+ 'mar_100': tensor(0.5604),
+ 'mar_100_per_class': tensor([0.4516, 0.3197, 0.8467, 0.6234]),
+ 'mar_large': tensor(0.5539),
+ 'mar_medium': tensor(0.6425),
+ 'mar_small': tensor(0.2242)}
 
 -- UNTRAINED RESNET50V2
 
@@ -1280,55 +1502,179 @@ RESNET - LR = 0.005 - ALL CLASSES - map@0.50:0.05:0.95
  'mar_large': tensor(0.6321),
  'mar_medium': tensor(0.7064),
  'mar_small': tensor(0.3330)}
-{'map': tensor(0.0243),
- 'map_50': tensor(0.0357),
- 'map_75': tensor(0.0259),
- 'map_large': tensor(0.0191),
- 'map_medium': tensor(0.0252),
- 'map_per_class': tensor([ 5.0124e-01,  3.5509e-01,  8.0408e-01,  6.0167e-01,  2.7579e-06,
-         6.3352e-06,  0.0000e+00,  0.0000e+00,  0.0000e+00,  0.0000e+00,
-         9.8587e-06,  1.3688e-05,  4.6036e-05,  5.7285e-06,  0.0000e+00,
-         0.0000e+00,  5.5114e-05,  0.0000e+00,  9.6243e-06,  0.0000e+00,
-         3.3188e-05,  4.1119e-05,  0.0000e+00,  0.0000e+00,  0.0000e+00,
-         0.0000e+00,  0.0000e+00,  0.0000e+00,  0.0000e+00,  0.0000e+00,
-         0.0000e+00, -1.0000e+00,  0.0000e+00,  0.0000e+00,  0.0000e+00,
-         0.0000e+00,  0.0000e+00,  0.0000e+00,  8.6012e-06,  0.0000e+00,
-         4.1114e-05,  1.5472e-04,  7.1976e-05,  7.9536e-06,  8.2846e-05,
-         1.0762e-05,  1.3667e-05,  0.0000e+00,  0.0000e+00,  0.0000e+00,
-         0.0000e+00,  0.0000e+00,  9.6126e-06,  0.0000e+00,  0.0000e+00,
-         0.0000e+00,  3.4956e-05,  3.9368e-06,  0.0000e+00,  3.9509e-06,
-         0.0000e+00,  0.0000e+00, -1.0000e+00,  0.0000e+00,  8.8402e-06,
-         9.8151e-06,  0.0000e+00,  0.0000e+00,  4.1536e-05,  1.6305e-05,
-         1.6100e-04,  3.5403e-06,  0.0000e+00,  0.0000e+00,  0.0000e+00,
-         1.4520e-04,  0.0000e+00,  2.0115e-05,  0.0000e+00,  0.0000e+00,
-         0.0000e+00,  0.0000e+00, -1.0000e+00,  0.0000e+00,  0.0000e+00,
-         3.1184e-06,  0.0000e+00,  4.9132e-05,  8.5670e-06,  0.0000e+00,
-         0.0000e+00,  8.0627e-06,  0.0000e+00,  0.0000e+00,  6.4925e-07,
-         0.0000e+00, -1.0000e+00]),
- 'map_small': tensor(0.0107),
- 'mar_1': tensor(0.0030),
- 'mar_10': tensor(0.0212),
- 'mar_100': tensor(0.0277),
- 'mar_100_per_class': tensor([ 5.8166e-01,  4.2462e-01,  8.3871e-01,  6.5714e-01,  1.1154e-04,
-         6.8966e-04,  0.0000e+00,  0.0000e+00,  0.0000e+00,  0.0000e+00,
-         3.7294e-04,  5.2038e-04,  1.6648e-03,  2.6997e-03,  0.0000e+00,
-         0.0000e+00,  3.6585e-03,  0.0000e+00,  9.4007e-04,  0.0000e+00,
-         2.9326e-03,  4.6154e-03,  0.0000e+00,  0.0000e+00,  0.0000e+00,
-         0.0000e+00,  0.0000e+00,  0.0000e+00,  0.0000e+00,  0.0000e+00,
-         0.0000e+00, -1.0000e+00,  0.0000e+00,  0.0000e+00,  0.0000e+00,
-         0.0000e+00,  0.0000e+00,  0.0000e+00,  6.4655e-04,  0.0000e+00,
-         3.2012e-03,  4.3261e-03,  1.5886e-03,  1.2957e-03,  1.1091e-02,
-         6.2208e-04,  1.0227e-03,  0.0000e+00,  0.0000e+00,  0.0000e+00,
-         0.0000e+00,  0.0000e+00,  1.9194e-04,  0.0000e+00,  0.0000e+00,
-         0.0000e+00,  2.1179e-03,  2.5674e-04,  0.0000e+00,  4.3478e-04,
-         0.0000e+00,  0.0000e+00, -1.0000e+00,  0.0000e+00,  9.4488e-04,
-         8.0727e-04,  0.0000e+00,  0.0000e+00,  3.6092e-03,  2.2814e-03,
-         3.1585e-03,  1.2766e-03,  0.0000e+00,  0.0000e+00,  0.0000e+00,
-         9.6463e-03,  0.0000e+00,  1.0526e-03,  0.0000e+00,  0.0000e+00,
-         0.0000e+00,  0.0000e+00, -1.0000e+00,  0.0000e+00,  0.0000e+00,
-         5.4054e-04,  0.0000e+00,  2.0906e-03,  7.0636e-04,  0.0000e+00,
-         0.0000e+00,  5.2743e-04,  0.0000e+00,  0.0000e+00,  1.0917e-04,
-         0.0000e+00, -1.0000e+00]),
- 'mar_large': tensor(0.0226),
- 'mar_medium': tensor(0.0297),
- 'mar_small': tensor(0.0148)}
+
+{'map': tensor(0.5802),
+ 'map_50': tensor(0.8580),
+ 'map_75': tensor(0.6364),
+ 'map_large': tensor(0.5612),
+ 'map_medium': tensor(0.6008),
+ 'map_per_class': tensor([0.5170, 0.3770, 0.8143, 0.6127]),
+ 'map_small': tensor(0.2706),
+ 'mar_1': tensor(0.0609),
+ 'mar_10': tensor(0.4896),
+ 'mar_100': tensor(0.6395),
+ 'mar_100_per_class': tensor([0.5950, 0.4396, 0.8536, 0.6699]),
+ 'mar_large': tensor(0.6336),
+ 'mar_medium': tensor(0.7009),
+ 'mar_small': tensor(0.3417)}
+
+{'map': tensor(0.5721),
+ 'map_50': tensor(0.8453),
+ 'map_75': tensor(0.6162),
+ 'map_large': tensor(0.5083),
+ 'map_medium': tensor(0.5932),
+ 'map_per_class': tensor([0.5084, 0.3670, 0.8143, 0.5985]),
+ 'map_small': tensor(0.2752),
+ 'mar_1': tensor(0.0608),
+ 'mar_10': tensor(0.4771),
+ 'mar_100': tensor(0.6196),
+ 'mar_100_per_class': tensor([0.5784, 0.4135, 0.8501, 0.6364]),
+ 'mar_large': tensor(0.6067),
+ 'mar_medium': tensor(0.6845),
+ 'mar_small': tensor(0.3435)}
+
+-- data transforms
+
+{'map': tensor(0.5988),
+    'map_50': tensor(0.8667),
+    'map_75': tensor(0.6460),
+    'map_large': tensor(0.5291),
+    'map_medium': tensor(0.6293),
+    'map_per_class': tensor([0.5278, 0.4096, 0.8517, 0.6060]),
+    'map_small': tensor(0.2723),
+    'mar_1': tensor(0.0259),
+    'mar_10': tensor(0.2383),
+    'mar_100': tensor(0.6548),
+    'mar_100_per_class': tensor([0.5962, 0.4755, 0.8874, 0.6601]),
+    'mar_large': tensor(0.6486),
+    'mar_medium': tensor(0.7146),
+    'mar_small': tensor(0.3289)}
+
+{'map': tensor(0.5911),
+ 'map_50': tensor(0.8564),
+ 'map_75': tensor(0.6289),
+ 'map_large': tensor(0.5642),
+ 'map_medium': tensor(0.6294),
+ 'map_per_class': tensor([0.5176, 0.3712, 0.8551, 0.6206]),
+ 'map_small': tensor(0.2737),
+ 'mar_1': tensor(0.0626),
+ 'mar_10': tensor(0.4989),
+ 'mar_100': tensor(0.6477),
+ 'mar_100_per_class': tensor([0.5901, 0.4381, 0.8882, 0.6743]),
+ 'mar_large': tensor(0.6318),
+ 'mar_medium': tensor(0.7106),
+ 'mar_small': tensor(0.3466)}
+
+{'map': tensor(0.5928),
+ 'map_50': tensor(0.8614),
+ 'map_75': tensor(0.6300),
+ 'map_large': tensor(0.5723),
+ 'map_medium': tensor(0.6370),
+ 'map_per_class': tensor([0.5175, 0.3690, 0.8674, 0.6173]),
+ 'map_small': tensor(0.3170),
+ 'mar_1': tensor(0.0621),
+ 'mar_10': tensor(0.4957),
+ 'mar_100': tensor(0.6525),
+ 'mar_100_per_class': tensor([0.5974, 0.4396, 0.8962, 0.6766]),
+ 'mar_large': tensor(0.6610),
+ 'mar_medium': tensor(0.7138),
+ 'mar_small': tensor(0.3917)}
+
+-- detection = 200
+
+{'map': tensor(0.5890),
+ 'map_50': tensor(0.8558),
+ 'map_75': tensor(0.6232),
+ 'map_large': tensor(0.5530),
+ 'map_medium': tensor(0.6243),
+ 'map_per_class': tensor([0.5078, 0.3645, 0.8653, 0.6183]),
+ 'map_small': tensor(0.3369),
+ 'mar_1': tensor(0.0617),
+ 'mar_10': tensor(0.4954),
+ 'mar_100': tensor(0.6497),
+ 'mar_100_per_class': tensor([0.5909, 0.4341, 0.8977, 0.6761]),
+ 'mar_large': tensor(0.6337),
+ 'mar_medium': tensor(0.7085),
+ 'mar_small': tensor(0.4080)}
+
+{'map': tensor(0.5880),
+ 'map_50': tensor(0.8333),
+ 'map_75': tensor(0.6250),
+ 'map_large': tensor(0.5638),
+ 'map_medium': tensor(0.6190),
+ 'map_per_class': tensor([0.5185, 0.3583, 0.8763, 0.5987]),
+ 'map_small': tensor(0.2786),
+ 'mar_1': tensor(0.0631),
+ 'mar_10': tensor(0.4988),
+ 'mar_100': tensor(0.6410),
+ 'mar_100_per_class': tensor([0.5896, 0.4194, 0.9032, 0.6521]),
+ 'mar_large': tensor(0.6649),
+ 'mar_medium': tensor(0.7077),
+ 'mar_small': tensor(0.3348)}
+
+- untrained fg 0.50
+
+{'map': tensor(0.5612),
+ 'map_50': tensor(0.8306),
+ 'map_75': tensor(0.5935),
+ 'map_large': tensor(0.5091),
+ 'map_medium': tensor(0.6001),
+ 'map_per_class': tensor([0.4475, 0.3485, 0.8398, 0.6091]),
+ 'map_small': tensor(0.2481),
+ 'mar_1': tensor(0.0610),
+ 'mar_10': tensor(0.4840),
+ 'mar_100': tensor(0.6182),
+ 'mar_100_per_class': tensor([0.5187, 0.4158, 0.8758, 0.6625]),
+ 'mar_large': tensor(0.5895),
+ 'mar_medium': tensor(0.6797),
+ 'mar_small': tensor(0.3018)}
+
+{'map': tensor(0.5212),
+ 'map_50': tensor(0.8035),
+ 'map_75': tensor(0.5365),
+ 'map_large': tensor(0.4458),
+ 'map_medium': tensor(0.5528),
+ 'map_per_class': tensor([0.3646, 0.3202, 0.8094, 0.5905]),
+ 'map_small': tensor(0.2213),
+ 'mar_1': tensor(0.0590),
+ 'mar_10': tensor(0.4548),
+ 'mar_100': tensor(0.5804),
+ 'mar_100_per_class': tensor([0.4425, 0.3860, 0.8416, 0.6514]),
+ 'mar_large': tensor(0.5339),
+ 'mar_medium': tensor(0.6329),
+ 'mar_small': tensor(0.2764)}
+
+
+
+-----------------------------------------------------------
+
+
+{'map': tensor(0.4273),
+ 'map_50': tensor(0.6793),
+ 'map_75': tensor(0.4358),
+ 'map_large': tensor(0.3206),
+ 'map_medium': tensor(0.4337),
+ 'map_per_class': tensor([0.2236, 0.2102, 0.7469, 0.5286]),
+ 'map_small': tensor(0.1758),
+ 'mar_1': tensor(0.0541),
+ 'mar_10': tensor(0.3935),
+ 'mar_100': tensor(0.4846),
+ 'mar_100_per_class': tensor([0.2934, 0.2615, 0.7882, 0.5953]),
+ 'mar_large': tensor(0.3841),
+ 'mar_medium': tensor(0.5264),
+ 'mar_small': tensor(0.2292)}
+
+{'map': tensor(0.4220),
+ 'map_50': tensor(0.6769),
+ 'map_75': tensor(0.4309),
+ 'map_large': tensor(0.3148),
+ 'map_medium': tensor(0.4333),
+ 'map_per_class': tensor([0.2163, 0.2259, 0.7368, 0.5088]),
+ 'map_small': tensor(0.1734),
+ 'mar_1': tensor(0.0539),
+ 'mar_10': tensor(0.3940),
+ 'mar_100': tensor(0.4801),
+ 'mar_100_per_class': tensor([0.2837, 0.2767, 0.7788, 0.5812]),
+ 'mar_large': tensor(0.3683),
+ 'mar_medium': tensor(0.5210),
+ 'mar_small': tensor(0.2149)}

@@ -169,6 +169,7 @@ class CustomRoIHeads(RoIHeads):
         num_images = len(proposals)
 
         for img_id in range(num_images):
+            # the various ground truths are retrieved from the sampled samples
             img_sampled_inds = sampled_inds[img_id]
             proposals[img_id] = proposals[img_id][img_sampled_inds]
             labels[img_id] = labels[img_id][img_sampled_inds]

@@ -143,9 +143,10 @@ def create_ssd300(n_classes):
   All the supported models internally rely on torchvision.models.detection.ssd300.SSD base class.
   """
   model = torchvision.models.detection.ssd300_vgg16(pretrained=True)
-  num_anchors = model.anchor_generator.num_anchors_per_location()
+  num_anchors = model.anchor_generator.num_anchors_per_location() # get num anchor
   in_channels=[]
   for layer in model.head.classification_head.module_list:
     in_channels.append(layer.in_channels)
+  # add new classification head with custom number of classes
   model.head.classification_head = SSDClassificationHead(in_channels, num_anchors, n_classes)
   return model

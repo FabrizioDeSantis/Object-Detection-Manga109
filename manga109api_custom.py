@@ -99,7 +99,7 @@ class Parser(object):
                 if bb_xml.text is not None:
                     d["#text"] = bb_xml.text
                 d["type"] = bb_xml.tag
-                d["author"] = author
+                d["author"] = author # adding the author label to the dictionary
 
                 if separate_by_tag:
                     try:

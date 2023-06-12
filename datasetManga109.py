@@ -16,8 +16,8 @@ def get_train_transform_aug():
    return T.Compose([
         T.PILToTensor(),
         T.ConvertImageDtype(torch.float),
-        T.RandomHorizontalFlip(p=0.5),
-        T.RandomPhotometricDistort(p=1.0),
+        T.RandomHorizontalFlip(p=1.0),
+        T.RandomPhotometricDistort(p=0.5),
         T.RandomZoomOut(p=0.5)
     ])
 
@@ -69,13 +69,13 @@ class CustomDataset(Dataset):
       for roi in rois:
         labels.append(self.classes.index(annotation_type))
         authors.append(roi["author"])
-        # xmin = top-left corner x-coordinates
+        # xmin = left corner x-coordinates
         xmin = roi["@xmin"]
-        # xmax = bottom-right corner x-coordinates
+        # xmax = right corner x-coordinates
         xmax = roi["@xmax"]
-        # ymin = top-left corner y-coordinates
+        # ymin = left corner y-coordinates
         ymin = roi["@ymin"]
-        # ymax = bottom-right corner y-coordinates
+        # ymax = right corner y-coordinates
         ymax = roi["@ymax"]
 
         # resize bounding box according to the desired size
