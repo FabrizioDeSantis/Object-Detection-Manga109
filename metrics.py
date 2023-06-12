@@ -9,12 +9,6 @@ def calculate_mAP(model, classes, device, val_loader, args, writer, draw_predict
     This function calculate the mean Average Precision for the test set.
     Mean Average Precision from from torchmetrics.detection.mean_ap was used to calculate the metric.
     Predicted boxes and targets have to be in Pascal VOC format (xmin-top left, ymin-top left, xmax-bottom right, ymax-bottom right).
-    Args:
-        model: the pretrained model
-        classes: List[str]
-        device
-        val_loader: DataLoader
-        args
     """
     model.to(device).eval()
     # get detection threshold from args
