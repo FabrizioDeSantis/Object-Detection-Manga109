@@ -21,7 +21,7 @@ def get_args():
 
   argParser.add_argument("-mode", "--mode", type = int, nargs = '?', const = 1, default = 0, help = "0 for training, 1 for loading a checkpoint, 2 for inference. Default is 0 (training mode)")
 
-  argParser.add_argument("-lr", "--learning_rate", type = float, nargs = '?', const = 1, default = 0.005, help = "Learning rate parameter for optimizer. Default is: 0.005")
+  argParser.add_argument("-lr", "--learning_rate", type = float, nargs = '?', const = 1, default = 0.001, help = "Learning rate parameter for optimizer. Default is: 0.001")
   argParser.add_argument("-bs", "--batch_size", type = int, nargs = '?', const = 1, default = 8, help = "Batch size parameter. Default is: 8")
   argParser.add_argument("-add_auth", "--add_authors", type = int, nargs = '?', const = 1, default = 0, help = "1 if you want to include authors, 0 otherwise. Default is: 0")
   argParser.add_argument("-res", "--resize_to", type = int, nargs = '?', const = 1, default = 512, help = "Resize dimensions of the input images. Default is: 512")
@@ -29,7 +29,7 @@ def get_args():
   argParser.add_argument("-min_ep", "--num_min_epochs", type = int, nargs = '?', default = 1, help = "Minimum number of epochs before using early stopping.")
   argParser.add_argument("-fn", "--file_name", type = str, nargs = '?', const = 1, default = "model.pth", help = "Name of the file where the trained model will stored")
   argParser.add_argument("-model", "--model", type = str, nargs = '?', const = 1, default="fasterrcnn", help = "Name of the model. Available models are: FasterRCNN (fasterrcnn), RetinaNet (retinanet), SSD300 (ssd). Default is fasterrcnn")
-  argParser.add_argument("-bb", "--backbone", type = str, nargs = '?', const = 1, default = "resnet50", help = "Name of the backbone for a FasterRCNN model. Available backbones are: resnet50, resnet50v2, mobilenet. Default is resnet50")
+  argParser.add_argument("-bb", "--backbone", type = str, nargs = '?', const = 1, default = "resnet50v2", help = "Name of the backbone for a FasterRCNN model. Available backbones are: resnet50, resnet50v2, mobilenet. Default is resnet50v2")
   argParser.add_argument("-opt", "--optimizer", type = str, nargs = '?', const = 1, default = "SGD", help = "Name of the optimzer. Available optimizers are: SGD, Adam. Default is SGD")
   argParser.add_argument("-checkpoint_path", "--checkpoint_path", type = str, nargs = '?', const = 1, default = "./", help = "Checkpoint path. Default is ./")
   argParser.add_argument("-seed", "--seed", type = int, nargs= '?', const = 1, default = 42, help = "Random seed for dataset division. Default is 42")
@@ -38,11 +38,15 @@ def get_args():
   argParser.add_argument("-pretrained", "--pretrained", type = int, nargs= '?', const = 1, default = 1, help = "Use pretrained model.")
   argParser.add_argument("-dataset", "--dataset_dir", type = str, nargs = '?', const = 1, default = "Manga109/Manga109_released_2021_12_30", help = "Directory path of dataset")
   argParser.add_argument("-inference_path", "--inference_path", type = str, nargs = '?', const = 1, default = "./inference_images", help = "Path where the images for inference are saved.")
-  argParser.add_argument("-dataset_transform", "--dataset_transform", type = str, nargs = '?', const = 1, default = 0, help = "1 if you want to use transformations, 0 otherwise.")
+  argParser.add_argument("-dataset_transform", "--dataset_transform", type = int, nargs = '?', const = 1, default = 0, help = "1 if you want to use transformations, 0 otherwise.")
   argParser.add_argument("-save_pred", "-save_predictions", type=float, nargs = '?', const = 1, default = 0, help= "1 if you want to save predictions on tensorboard, 0 otherwise")
+  
+  argParser.add_argument("-writer_path", "-writer_path", type=str, nargs = '?', const = 1, default = "./runs/experiments", help= "The path for Tensorboard metrics")
+
   argParser.add_argument("-det_thresh", "--detection_threshold", type = float, nargs = '?', const = 1, default = 0.50, help = "Detection threshold for the metric computation. Default is: 0.50")
   argParser.add_argument("-split", "--split", type = float, nargs = '?', const = 1, default = 0.20, help = "The value used to split the dataset into train and validation subsets. Default is: 0.20 (80% training and 20% validation).")
   argParser.add_argument("-map_authors", "--map_authors", type = int, nargs = '?', const = 1, default = 1, help = "Calculate mAP for author classification (available only if the author classification is enabled).")
+  
   # classes customization
 
   argParser.add_argument("-body", "--body", type = int, nargs = '?', const = 1, default = 1, help = "1 if you want to train the model to recognize 'body' class, 0 otherwise.")
@@ -52,15 +56,19 @@ def get_args():
   
   # Specific FasterRCNN parameters
 
+  argParser.add_argument("-trainable_backbone_layers", "--trainable_backbone_layers", type = int, nargs = '?', const = 1, default = 3, help = "Number of trainable (not frozen) layers starting from final block. Valid values are between 0 and 5.")
+
   # anchors customization
 
   # sizes
-
+  argParser.add_argument("-custom_anch", "--custom_anchors", type = int, nargs = '?', const = 1, default = 0, help = "1 if you want to add custom anchors, 0 otherwise")
+  argParser.add_argument("-size8", "--size8", type = int, nargs = '?', const = 1, default = 0, help = "1 if you want to add size 8 for anchors, 0 otherwise")
+  argParser.add_argument("-size16", "--size16", type = int, nargs = '?', const = 1, default = 0, help = "1 if you want to add size 16 for anchors, 0 otherwise")
   argParser.add_argument("-size32", "--size32", type = int, nargs = '?', const = 1, default = 1, help = "1 if you want to add size 32 for anchors, 0 otherwise")
-  argParser.add_argument("-size64", "--size64", type = int, nargs = '?', const = 1, default = 1, help = "1 if you want to add size 32 for anchors, 0 otherwise")
-  argParser.add_argument("-size128", "--size128", type = int, nargs = '?', const = 1, default = 1, help = "1 if you want to add size 32 for anchors, 0 otherwise")
-  argParser.add_argument("-size256", "--size256", type = int, nargs = '?', const = 1, default = 1, help = "1 if you want to add size 32 for anchors, 0 otherwise")
-  argParser.add_argument("-size512", "--size512", type = int, nargs = '?', const = 1, default = 1, help = "1 if you want to add size 32 for anchors, 0 otherwise")
+  argParser.add_argument("-size64", "--size64", type = int, nargs = '?', const = 1, default = 1, help = "1 if you want to add size 64 for anchors, 0 otherwise")
+  argParser.add_argument("-size128", "--size128", type = int, nargs = '?', const = 1, default = 1, help = "1 if you want to add size 128 for anchors, 0 otherwise")
+  argParser.add_argument("-size256", "--size256", type = int, nargs = '?', const = 1, default = 1, help = "1 if you want to add size 256 for anchors, 0 otherwise")
+  argParser.add_argument("-size512", "--size512", type = int, nargs = '?', const = 1, default = 1, help = "1 if you want to add size 512 for anchors, 0 otherwise")
 
   # aspect ratios
 
@@ -177,7 +185,7 @@ def main(args):
 
   if args.mode == 2:
     # inference mode
-    inference_model = load_inference_model(args.file_name)
+    inference_model = load_inference_model(args.file_name, DEVICE)
     get_prediction(inference_model = inference_model, classes = CLASSES, args = args)
   else:
 
@@ -193,6 +201,8 @@ def main(args):
     print("Authors: " + ("Included" if args.add_authors else "Not included"))
     print("Classes: " + str(NUM_CLASSES))
     print("Data aug: " + ("Yes" if args.dataset_transform else "No"))
+    if args.model=="fasterrcnn":
+      print("Trainable backbone layers: " + str(args.trainable_backbone_layers))
     print("-----------------------------")
 
     '''
@@ -273,7 +283,7 @@ def main(args):
         collate_fn=collate_fn
     )
 
-    writer = SummaryWriter('./runs/faster-rcnn-experiment')
+    writer = SummaryWriter('./runs/experiments')
 
     """
     solver

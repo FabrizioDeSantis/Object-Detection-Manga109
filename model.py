@@ -2,8 +2,10 @@ import math
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from torchvision.models.detection.ssd import SSDClassificationHead
 import torchvision
+import os
 import torch
 from custom_roi_heads import CustomRoIHeads, FastRCNNPredictorWithAuthor
+from torchvision.models.detection.rpn import RPNHead, AnchorGenerator
 
 def set_anchor(model, args):
   """
@@ -11,6 +13,10 @@ def set_anchor(model, args):
   """
   tuple_sizes_list = []
   tuple_aspect_ratios_list = []
+  if args.size8:
+    tuple_sizes_list.append((8,))
+  if args.size16:
+    tuple_sizes_list.append((16,))
   if args.size32:
     tuple_sizes_list.append((32,))
   if args.size64:
@@ -27,6 +33,10 @@ def set_anchor(model, args):
      tuple_aspect_ratios_list.append(1.0)
   if args.ar2:
      tuple_aspect_ratios_list.append(2.0)
+  if len(tuple_sizes_list) !=5:
+    # check the number of sizes (number of outputs of FPN is equal to 5)
+    print("Number of sizes must be equal to 5")
+    os._exit(1)
   # create tuple for anchors sizes
   sizes = tuple(tuple_sizes_list)
   # create tuple for anchors aspect ratios
@@ -35,14 +45,19 @@ def set_anchor(model, args):
   model.rpn.anchor_generator.sizes = sizes
   # replace default aspect ratios with custom aspect ratios
   model.rpn.anchor_generator.aspect_ratios = aspect_ratios
-  print("Anchors sizes: " + str(model.rpn.anchor_generator.sizes))
-  print("Anchors aspect ratios: " + str(model.rpn.anchor_generator.aspect_ratios))
+  anchor_generator = AnchorGenerator(
+  sizes=sizes,
+  aspect_ratios=tuple([tuple(tuple_aspect_ratios_list) for _ in range(5)]))
+  # replace anchor_generator with custom generator
+  model.rpn.anchor_generator = anchor_generator
+  # 256 because that's the number of features that FPN returns
+  model.rpn.head = RPNHead(256, anchor_generator.num_anchors_per_location()[0])
 
 def create_model(n_classes, n_authors, args):
 
   """
   Create custom model for object detection.
-  Supported models from torchvision: Faster R-CNN, RetinaNet.
+  Supported models from torchvision: Faster R-CNN, RetinaNet, SSD300.
   Available backbone for Faster R-CNN: ResNet50, MobileNetV3-Large.
   """
 
@@ -50,15 +65,15 @@ def create_model(n_classes, n_authors, args):
 
     if args.backbone == "resnet50":
       # create Faster R-CNN model with ResNet50-FPN backbone
-      model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=args.pretrained)
+      model = torchvision.models.detection.fasterrcnn_resnet50_fpn(weights=('DEFAULT' if args.pretrained else None), trainable_backbone_layers=args.trainable_backbone_layers)
 
     elif args.backbone == "resnet50v2":
       # create Faster R-CNN model with ResNet50-FPN backbone
-      model = torchvision.models.detection.fasterrcnn_resnet50_fpn_v2(pretrained=args.pretrained)
+      model = torchvision.models.detection.fasterrcnn_resnet50_fpn_v2(weights=('DEFAULT' if args.pretrained else None), trainable_backbone_layers=args.trainable_backbone_layers)
 
     elif args.backbone == "mobilenet":
       # create Faster R-CNN model with MobileNetV3-Large backbone
-      model = torchvision.models.detection.fasterrcnn_mobilenet_v3_large_fpn(pretrained=args.pretrained)
+      model = torchvision.models.detection.fasterrcnn_mobilenet_v3_large_fpn(weights=('DEFAULT' if args.pretrained else None), trainable_backbone_layers=args.trainable_backbone_layers)
 
     model = create_fasterrcnn(n_classes, n_authors, model, args)
 
@@ -84,9 +99,6 @@ def create_fasterrcnn(n_classes, n_authors, model, args):
   
   # get the number of input features
   in_features = model.roi_heads.box_predictor.cls_score.in_features
-  
-  # set sizes and aspect ratio of anchors
-  set_anchor(model, args)
 
   if args.add_authors:
     # change the default RoIHeads with CustomRoIHeads
@@ -113,6 +125,12 @@ def create_fasterrcnn(n_classes, n_authors, model, args):
   model.rpn.proposal_matcher.high_threshold = args.rpn_bg_iou_threshold
   model.rpn.score_thresh = args.rpn_score_threshold
 
+  if args.custom_anchors:
+    # set sizes and aspect ratio of anchors
+    set_anchor(model, args)
+  print("Anchors sizes: " + str(model.rpn.anchor_generator.sizes))
+  print("Anchors aspect ratios: " + str(model.rpn.anchor_generator.aspect_ratios))
+
   return model
 
 def create_retinanet(n_classes, args):
@@ -124,7 +142,7 @@ def create_retinanet(n_classes, args):
   """
 
   # load model
-  model = torchvision.models.detection.retinanet_resnet50_fpn_v2(pretrained=args.pretrained)
+  model = torchvision.models.detection.retinanet_resnet50_fpn_v2(weights=('DEFAULT' if args.pretrained else None))
   num_anchors = model.head.classification_head.num_anchors
   model.head.classification_head.num_classes = n_classes
 
@@ -136,13 +154,13 @@ def create_retinanet(n_classes, args):
 
   return model
 
-def create_ssd300(n_classes):
+def create_ssd300(n_classes, args):
   """
   Create SSD300 for custom classes.
   The following model builder can be used to istantiate a SSD300 model with or without pretrained weights.
   All the supported models internally rely on torchvision.models.detection.ssd300.SSD base class.
   """
-  model = torchvision.models.detection.ssd300_vgg16(pretrained=True)
+  model = torchvision.models.detection.ssd300_vgg16(weights=('DEFAULT' if args.pretrained else None))
   num_anchors = model.anchor_generator.num_anchors_per_location() # get num anchor
   in_channels=[]
   for layer in model.head.classification_head.module_list:

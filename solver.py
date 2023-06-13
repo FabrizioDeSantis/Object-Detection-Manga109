@@ -31,6 +31,7 @@ class Solver(object):
         p.requires_grad=True
       params = [p for p in self.model.parameters()]
       names = [n for n,p in self.model.named_parameters()]
+    # print(names)
     # choose optimizer
     if self.args.optimizer == "SGD":
         self.optimizer = torch.optim.SGD(params, lr=self.args.learning_rate, momentum=0.9)
@@ -72,7 +73,7 @@ class Solver(object):
     for epoch in range(0, self.epochs):
       # record the training losses for each batch in this epoch
       train_losses = []
-
+      # classifier_losses = []
       # create a terminal progress bar
       progress_bar = tqdm(self.train_loader, total=len(self.train_loader))
 
@@ -86,6 +87,9 @@ class Solver(object):
         targets = [{k: v.to(self.device) for k, v in t.items()} for t in targets]
         # return the losses
         loss_dict = self.model(images, targets)
+        # loss classifier
+        # loss_classifier = loss_dict["loss_classifier"]
+        # classifier_losses.append(loss_classifier.item())
         # calculate the sum of the losses to obtain the main loss
         losses = sum(loss for loss in loss_dict.values())
         loss_value = losses.item()
@@ -97,6 +101,7 @@ class Solver(object):
         # save metrics on tensorboard
         if i % self.args.print_every == (self.args.print_every-1):
           self.writer.add_scalar("epoch_avg_train_loss", np.average(train_losses), epoch*len(self.train_loader) + i)
+          #self.writer.add_scalar("epoch_avg_classifier_train_loss", np.average(classifier_losses), epoch*len(self.train_loader) + i)
 
         progress_bar.set_description(desc=f"Loss: {loss_value:.4f}")
       # return the validation loss
@@ -130,6 +135,7 @@ class Solver(object):
   def validate(self, epoch):
     # record the validation losses for each batch in this epoch
     val_losses = []
+    #classifier_losses = []
 
     # create a terminal progress bar
     progress_bar = tqdm(self.val_loader, total=len(self.val_loader))
@@ -145,12 +151,14 @@ class Solver(object):
           loss_dict = self.model(images, targets)
       # obtain the main loss
       losses = sum(loss for loss in loss_dict.values())
-      # loss_classifier = loss_dict["loss_classifier"]
+      #loss_classifier = loss_dict["loss_classifier"]
+      #classifier_losses.append(loss_classifier.item())
       loss_value = losses.item()
       val_losses.append(loss_value)
       # 
       if i % self.args.print_every == (self.args.print_every-1):
         self.writer.add_scalar("epoch_avg_val_loss", np.average(val_losses), epoch*len(self.val_loader) + i)
+        #self.writer.add_scalar("epoch_avg_classifier_train_loss", np.average(classifier_losses), epoch*len(self.val_loader) + i)
 
       progress_bar.set_description(desc=f"Loss: {loss_value:.4f}")
 

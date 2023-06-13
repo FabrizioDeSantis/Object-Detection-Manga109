@@ -23,7 +23,7 @@ for i, d in enumerate(js):
   kw = next(iter(d))
   data = pd.DataFrame.from_dict(d)
   fig, ax = plt.subplots(figsize=(15, 10))
-  if kw=="classes":
+  if kw=="Classes (pretrain)":
      data.plot(kind="bar", x=str(kw), y=["mAP", "mAP (single)"], rot=0, ax=ax)
   else:
     data.plot(kind="bar", x=str(kw), y=["mAP", "mAP_50", "mAP_75"], rot=0, ax=ax)
@@ -33,7 +33,7 @@ for i, d in enumerate(js):
 
   plt.xlabel(str(kw))
   plt.ylabel("Value")
-  plt.title("Results")
+  plt.title("Results (mAP@0.50:0.05:0.95)")
   plt.legend()
   #plt.show()
   fig.savefig("results-" + str(kw) + ".png")

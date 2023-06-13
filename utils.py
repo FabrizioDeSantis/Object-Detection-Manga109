@@ -72,7 +72,6 @@ def save_predictions_on_tb(draw_actual_boxes, draw_boxes, predicted_classes, act
     If writer is not None, when using this function the grid with the images will be plotted.
     Otherwise, the grid will be saved on tensorboard.
     """
-    to_pil = transforms.ToPILImage()
     COLORS = np.random.uniform(0, 255, size=(len(classes), 3))
     fig = plt.figure(figsize=(20,5))
     img2 = img.copy()
@@ -109,6 +108,6 @@ def save_predictions_on_tb(draw_actual_boxes, draw_boxes, predicted_classes, act
     plt.title('Prediction')
     plt.axis('off')
     if writer is not None:
-        writer.add_figure("Prova", fig)
+        writer.add_figure("Prediction", fig)
     else:
        plt.show()

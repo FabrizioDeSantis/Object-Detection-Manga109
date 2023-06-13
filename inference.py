@@ -23,8 +23,8 @@ def load_image_tensor(image_paths, device):
     input_images.append(image_tensor.to(device))
   return input_images
 
-def load_inference_model(model_path):
-  model = torch.load(model_path)
+def load_inference_model(model_path, device):
+  model = torch.load(model_path, map_location = torch.device(device))
   return model
 
 def get_results(detector, images):

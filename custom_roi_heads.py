@@ -2,7 +2,6 @@ from typing import Dict, List, Optional, Tuple
 
 import torch
 import torch.nn.functional as F
-import torchvision
 from torchvision.models.detection.roi_heads import RoIHeads
 from torch import nn, Tensor
 from torchvision.ops import boxes as box_ops
@@ -224,7 +223,7 @@ class CustomRoIHeads(RoIHeads):
         all_authors_scores = []
 
         for boxes, scores, authors_scores, image_shape in zip(pred_boxes_list, pred_scores_list, pred_authors_scores_list, image_shapes):
-            # Clip the bounding boxes so that they are contained within the boundaries of the image image.
+            # Clip the bounding boxes so that they are contained within the boundaries of the image.
             boxes = box_ops.clip_boxes_to_image(boxes, image_shape) # boxes: tensor of shape [N, 4]
 
             # Create labels for each prediction
