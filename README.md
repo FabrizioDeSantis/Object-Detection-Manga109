@@ -14,7 +14,7 @@ The purpose of this deep learning project is to conduct an object detection task
 ## Author classification
 
 In addition to the two original branches (classification and regression), a new branch has been added to classify authors. The new classifier is similar to the original classifier, with the only difference that it will have to recognize a number of classes equal to the number of authors.
-![Structure](./faster_authors_model.jpeg)
+![Structure](./faster_authors_model.jpg)
 
 ## The parameters that can be provided through the command line and allow customization of the execution are:
 
